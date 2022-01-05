@@ -9,11 +9,6 @@ variable "cluster_version" {
   type        = string
 }
 
-variable "sentry_version" {
-  description = "Sentry application deployment version"
-  type        = string
-}
-
 variable "vpc_id" {
   description = "VPC ID where the EKS cluster will be created."
   type        = string
