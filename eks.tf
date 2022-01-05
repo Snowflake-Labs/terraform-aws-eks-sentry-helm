@@ -1,37 +1,37 @@
 module "eks" {
-  source = "terraform-aws-modules/eks/aws"
+  source  = "terraform-aws-modules/eks/aws"
+  version = "18.0.0"
 
-  cluster_name                         = var.eks_cluster_name
-  cluster_version                      = var.kubernetes_version
-  vpc_id                               = var.vpc_id
-  subnets                              = var.private_subnets_ids
-  cluster_endpoint_private_access      = var.cluster_endpoint_private_access
-  cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
+  cluster_name    = var.eks_cluster_name
+  cluster_version = var.cluster_version
+  vpc_id          = var.vpc_id
+  subnets         = var.private_subnets_ids
+
+  cluster_endpoint_private_access      = true
+  cluster_endpoint_public_access_cidrs = true
   cluster_enabled_log_types            = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cluster_log_retention_in_days        = 0
 
-  node_groups_defaults = {
-    ami_type  = "AL2_x86_64"
-    disk_size = 50
+  workers_group_defaults = {
+    root_volume_type = "gp2"
   }
 
-  node_groups = {
-    node-group-1 = {
-      desired_capacity = 3
-      max_capacity     = 3
-      min_capacity     = 3
-
-      instance_types = ["t3.xlarge"]
-      capacity_type  = "ON_DEMAND"
-      k8s_labels = {
-        environment = "${var.env}"
-      }
-    }
-  }
-
-  #map_roles    = var.map_roles
-  map_users    = var.map_users
-  map_accounts = var.map_accounts
+  worker_groups = [
+    {
+      name                          = "worker-group-1"
+      instance_type                 = "t2.small"
+      additional_userdata           = ""
+      asg_desired_capacity          = 2
+      additional_security_group_ids = [aws_security_group.sentry_sg.id]
+    },
+    {
+      name                          = "worker-group-2"
+      instance_type                 = "t2.medium"
+      additional_userdata           = ""
+      asg_desired_capacity          = 1
+      additional_security_group_ids = [aws_security_group.sentry_sg.id]
+    },
+  ]
 }
 
 data "aws_eks_cluster" "cluster" {

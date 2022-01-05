@@ -1,16 +1,11 @@
 # Required Variables
-variable "vpc_name" {
-  description = "The name of the VPC that will be created to house the EKS cluster."
-  type        = string
-}
-
 variable "eks_cluster_name" {
   description = "The name of the EKS cluster to create for sentry."
   type        = string
 }
 
-variable "lb_cert" {
-  description = "Load Balancer Cert"
+variable "cluster_version" {
+  description = "The version of the EKS cluster to create for sentry."
   type        = string
 }
 
@@ -19,38 +14,10 @@ variable "sentry_version" {
   type        = string
 }
 
-variable "redirect_uri" {
-  description = "Okta Redirect URI"
-  type        = string
-}
-
-variable "authorization_url" {
-  description = "Okta Authorization URL"
-  type        = string
-}
-
-variable "token_url" {
-  description = "Okta Token URL"
-  type        = string
-}
-
-variable "user_url" {
-  description = "Okta user URL"
-  type        = string
-}
-
-variable "private_subnet_ids" {
-
-}
-
-variable "private_subnet_cidr_blocks" {
-
-}
-
 variable "vpc_id" {
-
+  description = "VPC ID where the EKS cluster will be created."
+  type        = string
 }
-
 
 # Optional Variables
 variable "sentry_namespace" {
@@ -71,93 +38,20 @@ variable "env" {
   default     = "dev"
 }
 
-variable "map_accounts" {
-  description = "Additional AWS account numbers to add to the aws-auth configmap."
-  type        = list(string)
-  default     = []
-}
-
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
 variable "kubernetes_version" {
   description = "Version of Kubernetes to use."
   type        = string
   default     = "1.21"
 }
 
-variable "cluster_endpoint_private_access" {
-  description = "Indicates whether or not the Amazon EKS private API server endpoint is enabled."
-  type        = bool
-  default     = true
-}
-
-variable "cluster_endpoint_public_access_cidrs" {
-  description = "Additional AWS account numbers to add to the aws-auth configmap."
+variable "allowed_cidr_blocks" {
+  description = "Allowed CIDR blocks that can initiate connections to Sentry."
   type        = list(string)
   default     = []
 }
 
-variable "allowed_cidr_blocks" {
-  description = "DEV VPN CIDR block"
-  type        = string
+variable "private_subnets_ids" {
+  description = "Private subnet IDs to add kubernetes cluster on."
+  type        = list(string)
   default     = []
-}
-
-variable "tines_access_sg" {
-  description = "Tines Access Security group"
-  type        = string
-}
-
-variable "client_id_arn" {
-  type = string
-
-  validation {
-    condition = can(regex(
-      "^arn:aws:secretsmanager:(us|ap)-(west|south)-\\d:\\d{12}:secret:(test|prod)/okta/client-id[a-zA-Z0-9/_+=.@-]+$",
-      var.client_id_arn
-    ))
-    error_message = "The secrets arn doesn't match the regex ^arn:aws:secretsmanager:(us|ap)-(west|south)-\\d:\\d{12}:secret:(test|prod)/okta/client-id[a-zA-Z0-9/_+=.@-]+$."
-  }
-}
-
-variable "client_secret_arn" {
-  type = string
-
-  validation {
-    condition = can(regex(
-      "^arn:aws:secretsmanager:(us|ap)-(west|south)-\\d:\\d{12}:secret:(test|prod)/okta/client-secret[a-zA-Z0-9/_+=.@-]+$",
-      var.client_secret_arn
-    ))
-    error_message = "The secrets arn doesn't match the regex ^arn:aws:secretsmanager:(us|ap)-(west|south)-\\d:\\d{12}:secret:(test|prod)/okta/client-secret[a-zA-Z0-9/_+=.@-]+$."
-  }
-}
-
-
-variable "client_id" {
-
-}
-
-variable "client_secret" {
-
-}
-
-variable "tines_access" {
-
-}
-
-
-
-locals {
-  private_subnets            = data.terraform_remote_state.vpc.outputs.private_subnet_ids
-  private_subnet_cidr_blocks = data.terraform_remote_state.vpc.outputs.private_subnet_cidr_blocks
-  vpc_id                     = data.terraform_remote_state.vpc.outputs.vpc_id
 }
