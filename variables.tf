@@ -14,11 +14,6 @@ variable "lb_cert" {
   type        = string
 }
 
-variable "sentry_namespace" {
-  description = "Kuberentes namespace to deploy Sentry application"
-  type        = string
-}
-
 variable "sentry_version" {
   description = "Sentry application deployment version"
   type        = string
@@ -58,6 +53,12 @@ variable "vpc_id" {
 
 
 # Optional Variables
+variable "sentry_namespace" {
+  description = "Kuberentes namespace to deploy Sentry application"
+  type        = string
+  default     = "sentry"
+}
+
 variable "aws_region" {
   description = "The AWS region in which all resources will be created."
   type        = string

@@ -24,7 +24,7 @@ module "eks" {
       instance_types = ["t3.xlarge"]
       capacity_type  = "ON_DEMAND"
       k8s_labels = {
-        Environment = "${var.env}"
+        environment = "${var.env}"
       }
     }
   }
