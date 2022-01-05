@@ -160,10 +160,4 @@ locals {
   private_subnets            = data.terraform_remote_state.vpc.outputs.private_subnet_ids
   private_subnet_cidr_blocks = data.terraform_remote_state.vpc.outputs.private_subnet_cidr_blocks
   vpc_id                     = data.terraform_remote_state.vpc.outputs.vpc_id
-  db_password                = jsondecode(data.aws_secretsmanager_secret_version.db_password.secret_string)["CASSANDRA_PASSWORD"]
-  client_id                  = jsondecode(data.aws_secretsmanager_secret_version.client_id.secret_string)["CLIENT_ID"]
-  client_secret              = jsondecode(data.aws_secretsmanager_secret_version.client_secret.secret_string)["CLIENT_SECRET"]
-  tines_access               = data.terraform_remote_state.tines.outputs.tines_app_security_group_id
 }
-
-
