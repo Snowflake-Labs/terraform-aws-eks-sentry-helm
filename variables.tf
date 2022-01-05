@@ -4,7 +4,7 @@ variable "eks_cluster_name" {
   type        = string
 }
 
-variable "cluster_version" {
+variable "kubernetes_version" {
   description = "The version of the EKS cluster to create for sentry."
   type        = string
 }
@@ -31,12 +31,6 @@ variable "env" {
   description = "Environment to be test/dev/prod."
   type        = string
   default     = "dev"
-}
-
-variable "kubernetes_version" {
-  description = "Version of Kubernetes to use."
-  type        = string
-  default     = "1.21"
 }
 
 variable "allowed_cidr_blocks" {
