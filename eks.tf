@@ -9,9 +9,11 @@ module "eks" {
   subnets = var.private_subnet_ids
 
   cluster_endpoint_private_access      = true
-  cluster_endpoint_public_access_cidrs = true
-  cluster_enabled_log_types            = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  cluster_log_retention_in_days        = 0
+  cluster_endpoint_public_access       = true
+  worker_additional_security_group_ids = [aws_security_group.all_worker_mgmt.id]
+
+  cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  cluster_log_retention_in_days = 0
 
   workers_group_defaults = {
     root_volume_type = "gp2"
@@ -33,6 +35,10 @@ module "eks" {
       additional_security_group_ids = [aws_security_group.sentry_sg.id]
     },
   ]
+
+  map_roles    = var.map_roles
+  map_users    = var.map_users
+  map_accounts = var.map_accounts
 }
 
 data "aws_eks_cluster" "cluster" {
