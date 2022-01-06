@@ -5,7 +5,7 @@ resource "kubernetes_namespace" "sentry" {
 }
 
 resource "helm_release" "sentry" {
-  name       = "sentryy"
+  name       = "sentry"
   repository = "https://sentry-kubernetes.github.io/charts"
   chart      = "sentry"
   namespace  = kubernetes_namespace.sentry.metadata[0].name
