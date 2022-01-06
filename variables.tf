@@ -51,11 +51,18 @@ variable "map_roles" {
 }
 
 variable "map_users" {
-  type    = list(string)
+  description = "Additional IAM users to add to the aws-auth configmap."
+  type = list(object({
+    userarn  = string
+    username = string
+    groups   = list(string)
+  }))
+
   default = []
 }
 
 variable "map_accounts" {
-  type    = list(string)
-  default = []
+  description = "Additional AWS account numbers to add to the aws-auth configmap."
+  type        = list(string)
+  default     = []
 }
