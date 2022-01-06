@@ -44,3 +44,18 @@ variable "private_subnet_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "map_roles" {
+  type    = list(string)
+  default = []
+}
+
+variable "map_users" {
+  type    = list(string)
+  default = []
+}
+
+variable "map_accounts" {
+  type    = list(string)
+  default = []
+}
