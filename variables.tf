@@ -45,11 +45,6 @@ variable "private_subnet_ids" {
   default     = []
 }
 
-variable "map_roles" {
-  type    = list(string)
-  default = []
-}
-
 variable "map_users" {
   description = "Additional IAM users to add to the aws-auth configmap."
   type = list(object({
