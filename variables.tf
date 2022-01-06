@@ -39,7 +39,7 @@ variable "allowed_cidr_blocks" {
   default     = []
 }
 
-variable "private_subnets_ids" {
+variable "private_subnet_ids" {
   description = "Private subnet IDs to add kubernetes cluster on."
   type        = list(string)
   default     = []
