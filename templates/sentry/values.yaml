@@ -1,9 +1,9 @@
-prefix:
+prefix: pat
 
 user:
   create: true
   email: admin@sentry.local
-  password: aaaa
+  password: admin@sentry.local
 
 # this is required on the first installation, as sentry has to be initialized first
 # recommended to set false for updating the helm chart afterwards,
@@ -210,7 +210,7 @@ snuba:
   api:
     replicas: 1
     env: []
-    probeInitialDelaySeconds: 10
+    probeInitialDelaySeconds: 120
     liveness:
       timeoutSeconds: 2
     readiness:
@@ -444,7 +444,7 @@ hooks:
 system:
   ## be sure to include the scheme on the url, for example: "https://sentry.example.com"
   url: ""
-  adminEmail: ""
+  adminEmail: "prasanth.kommini@snowflake.com"
   ## This should only be used if you’re installing Sentry behind your company’s firewall.
   public: false
   ## This will generate one for you (it's must be given upon updates)
@@ -643,7 +643,7 @@ config:
     # No YAML relay config given
 
 clickhouse:
-  enabled: true
+  enabled: false
   clickhouse:
     imageVersion: "20.8.9.6"
     configmap:
@@ -688,7 +688,7 @@ externalClickhouse:
   tcpPort: 9000
   httpPort: 8123
   username: default
-  password: ""
+  password: "clickhouse_password"
   database: default
   ## Cluster name, can be found in config
   ## (https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings-remote-servers)
@@ -699,7 +699,7 @@ externalClickhouse:
 # Settings for Kafka.
 # See https://github.com/bitnami/charts/tree/master/bitnami/kafka
 kafka:
-  enabled: true
+  enabled: false
   replicaCount: 3
   allowPlaintextListener: true
   defaultReplicationFactor: 3
@@ -864,14 +864,14 @@ metrics:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
   livenessProbe:
     enabled: true
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 5
     timeoutSeconds: 2
     failureThreshold: 3
     successThreshold: 1
   readinessProbe:
     enabled: true
-    initialDelaySeconds: 30
+    initialDelaySeconds: 120
     periodSeconds: 5
     timeoutSeconds: 2
     failureThreshold: 3
