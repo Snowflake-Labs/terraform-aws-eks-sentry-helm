@@ -10,6 +10,7 @@ resource "helm_release" "sentry" {
   chart      = "sentry"
   version    = "12.0.0"
   namespace  = kubernetes_namespace.sentry.metadata[0].name
+  timeout    = 600
 
 #   values = [
 #     file("${path.module}/templates/sentry/values.yaml")
