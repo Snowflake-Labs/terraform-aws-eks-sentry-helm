@@ -11,7 +11,7 @@ resource "helm_release" "sentry" {
   version    = "12.0.0"
   namespace  = kubernetes_namespace.sentry.metadata[0].name
 
-  values = [
-    file("${path.module}/templates/sentry/values.yaml")
-  ]
+#   values = [
+#     file("${path.module}/templates/sentry/values.yaml")
+#   ]
 }

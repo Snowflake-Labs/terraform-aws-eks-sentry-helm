@@ -787,7 +787,7 @@ externalPostgresql:
 
 rabbitmq:
   ## If disabled, Redis will be used instead as the broker.
-  enabled: true
+  enabled: false
   clustering:
     forceBoot: true
     rebalance: true
