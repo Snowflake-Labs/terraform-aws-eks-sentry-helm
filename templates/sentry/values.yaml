@@ -1,9 +1,9 @@
-prefix: pat
+prefix: "${module_prefix}"
 
 user:
   create: true
-  email: admin@sentry.local
-  password: admin@sentry.local
+  email: "${sentry_email}"
+  password: "${sentry_password}"
 
 # this is required on the first installation, as sentry has to be initialized first
 # recommended to set false for updating the helm chart afterwards,
@@ -210,7 +210,7 @@ snuba:
   api:
     replicas: 1
     env: []
-    probeInitialDelaySeconds: 120
+    probeInitialDelaySeconds: 10
     liveness:
       timeoutSeconds: 2
     readiness:
@@ -444,7 +444,7 @@ hooks:
 system:
   ## be sure to include the scheme on the url, for example: "https://sentry.example.com"
   url: ""
-  adminEmail: "prasanth.kommini@snowflake.com"
+  adminEmail: ""
   ## This should only be used if you’re installing Sentry behind your company’s firewall.
   public: false
   ## This will generate one for you (it's must be given upon updates)
@@ -516,10 +516,15 @@ service:
   name: sentry
   type: ClusterIP
   externalPort: 9000
-  annotations: {}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-ssl-negotiation-policy: "ELBSecurityPolicy-TLS-1-2-2017-01"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "${lb_cert}"
+    service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+    service.beta.kubernetes.io/aws-load-balancer-backend-port: "9000"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443,8443"
   # externalIPs:
   # - 192.168.0.1
-  # loadBalancerSourceRanges: []
+  lbranges: "${allowed_cidr_blocks}"
 
 github: {} # https://github.com/settings/apps (Create a Github App)
 # github:
@@ -561,7 +566,7 @@ ingress:
   # If you are using traefik ingress controller, switch this to 'traefik'
   # if you are using AWS ALB Ingress controller, switch this to 'aws-alb'
   # if you are using GKE Ingress controller, switch this to 'gke'
-  regexPathStyle: nginx
+  regexPathStyle: "aws-alb"
   #If you are using AWS ALB Ingress controller, switch to true if you want activate the http to https redirection.
   alb:
     httpRedirect: false
@@ -643,7 +648,7 @@ config:
     # No YAML relay config given
 
 clickhouse:
-  enabled: false
+  enabled: true
   clickhouse:
     imageVersion: "20.8.9.6"
     configmap:
@@ -688,7 +693,7 @@ externalClickhouse:
   tcpPort: 9000
   httpPort: 8123
   username: default
-  password: "clickhouse_password"
+  password: ""
   database: default
   ## Cluster name, can be found in config
   ## (https://clickhouse.tech/docs/en/operations/server-configuration-parameters/settings/#server-settings-remote-servers)
@@ -699,7 +704,7 @@ externalClickhouse:
 # Settings for Kafka.
 # See https://github.com/bitnami/charts/tree/master/bitnami/kafka
 kafka:
-  enabled: false
+  enabled: true
   replicaCount: 3
   allowPlaintextListener: true
   defaultReplicationFactor: 3
@@ -787,7 +792,7 @@ externalPostgresql:
 
 rabbitmq:
   ## If disabled, Redis will be used instead as the broker.
-  enabled: false
+  enabled: true
   clustering:
     forceBoot: true
     rebalance: true
@@ -864,14 +869,14 @@ metrics:
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes)
   livenessProbe:
     enabled: true
-    initialDelaySeconds: 120
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 2
     failureThreshold: 3
     successThreshold: 1
   readinessProbe:
     enabled: true
-    initialDelaySeconds: 120
+    initialDelaySeconds: 30
     periodSeconds: 5
     timeoutSeconds: 2
     failureThreshold: 3

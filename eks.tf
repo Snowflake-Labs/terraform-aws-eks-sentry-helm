@@ -10,6 +10,7 @@ module "eks" {
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
+  cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
 
   cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cluster_log_retention_in_days = 0
