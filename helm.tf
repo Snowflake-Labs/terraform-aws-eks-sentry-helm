@@ -15,7 +15,7 @@ resource "helm_release" "sentry" {
   force_update = true
 
   values = [
-    file("${path.module}/templates/sentry/values.yaml"),
+    templatefile("${path.module}/templates/sentry/values.yaml"),
     {
       module_prefix = "${var.module_prefix}",
       sentry_email = "${var.sentry_email}",
