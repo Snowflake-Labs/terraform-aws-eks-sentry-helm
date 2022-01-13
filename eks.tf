@@ -9,7 +9,7 @@ module "eks" {
   subnets = var.private_subnet_ids
 
   cluster_endpoint_private_access = true
-  cluster_endpoint_public_access_cidrs = var.cluster_endpoint_public_access_cidrs
+  cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
   cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
   cluster_log_retention_in_days = 0
