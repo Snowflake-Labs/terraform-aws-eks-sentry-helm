@@ -17,8 +17,12 @@ resource "helm_release" "sentry" {
   values = [
     file("${path.module}/templates/sentry/values.yaml"),
     {
-      lb_cert             = "${var.lb_cert}",
-      allowed_cidr_blocks = "${var.allowed_cidr_blocks}",
+      module_prefix = "${var.module_prefix}",
+      sentry_email = "${var.sentry_email}",
+      sentry_password = "${var.sentry_password}",
+      sentry_dns_name = "${local.sentry_dns_name}",
+      subdomain_cert_arn = "${var.subdomain_cert_arn}",
+      allowed_cidr_blocks = "${var.allowed_cidr_blocks}"
     }
   ]
 }

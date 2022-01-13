@@ -14,6 +14,26 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "sentry_email" {
+  description = "The email used for logging in."
+  type        = string
+}
+
+variable "sentry_password" {
+  description = "The login password."
+  type        = string
+}
+
+variable "hosted_zone_subdomain" {
+  description = "Hosted zone subdomain name on which sentry domain will be created."
+  type        = string
+}
+
+variable "subdomain_cert_arn" {
+  description = "ACM Cert ARN of the wildcart cert for the hosted zone domain name."
+  type        = string
+}
+
 # Optional Variables
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
@@ -60,4 +80,15 @@ variable "map_accounts" {
   description = "Additional AWS account numbers to add to the aws-auth configmap."
   type        = list(string)
   default     = []
+}
+
+variable "module_prefix" {
+  description = "?"
+  type        = string
+  default     = ""
+}
+
+
+locals {
+  sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
 }
