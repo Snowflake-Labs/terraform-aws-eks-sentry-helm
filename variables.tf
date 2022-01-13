@@ -88,7 +88,6 @@ variable "module_prefix" {
   default     = ""
 }
 
-
 locals {
   sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
 }

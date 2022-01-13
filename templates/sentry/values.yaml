@@ -27,8 +27,8 @@ user:
 #     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443,8443"
 #   loadBalancerSourceRanges: "${allowed_cidr_blocks}"
 
-nginx:
-  enabled: false
+# nginx:
+#   enabled: false
 
 ingress:
   enabled: true
@@ -43,3 +43,28 @@ ingress:
     external-dns.alpha.kubernetes.io/hostname: "${sentry_dns_name}"
     alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
+# externalRedis = {
+#   host = local.tfstate["redis"]["host"]
+# }
+
+# externalPostgresql = {
+#   host     = module.db.connection_secret["values"]["host"]
+#   database = module.db.connection_secret["values"]["name"]
+#   username = module.db.connection_secret["values"]["username"]
+#   password = module.db.connection_secret["values"]["password"]
+# }
+
+# mail = {
+#   backend  = "smtp"
+#   useTls   = true
+#   from     = local.email
+#   host     = local.stack_vars["ses"]["host"]
+#   port     = local.stack_vars["ses"]["port"]
+#   username = module.smtp_user.credentials["values"]["access_key_id"]
+#   password = module.smtp_user.credentials["values"]["password"]
+# }
+
+# serviceAccount = {
+#   enabled     = true
+#   annotations = { "eks.amazonaws.com/role-arn" = module.svc_account_iam_role.arn }
+# }
