@@ -39,7 +39,7 @@ data "aws_iam_policy_document" "external_dns_irsa_assume_role_policy_doc" {
 
     principals {
       type        = "Federated"
-      identifiers = [module.eks.eks_cluster_identity_oidc_issuer_arn]
+      identifiers = [module.eks.oidc_provider_arn]
     }
 
     condition {
