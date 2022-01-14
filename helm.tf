@@ -73,12 +73,12 @@ resource "helm_release" "external_dns" {
     value = "aws"
   }
 
-  set_string {
+  set {
     name  = "policy"
     value = "sync"
   }
 
-  set_string {
+  set {
     name  = "logLevel"
     value = "warn" # var.external_dns_chart_log_level
   }
@@ -88,12 +88,12 @@ resource "helm_release" "external_dns" {
     value = "{ingress,service}"
   }
 
-  set_string {
+  set {
     name  = "aws.zoneType"
     value = var.external_dns_zone_type
   }
 
-  set_string {
+  set {
     name  = "aws.region"
     value = var.aws_region
   }
