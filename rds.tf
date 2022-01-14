@@ -13,7 +13,7 @@ module "sentry_db" {
   vpc_id                  = var.vpc_id
   subnets                 = var.private_subnet_ids
   replica_count           = var.az_count
-  vpc_security_group_ids  = [aws_security_group.sentry_rds.id]
+  vpc_security_group_ids  = [aws_security_group.sentry_rds_pg.id]
   allowed_security_groups = var.bastion_security_group_id != null ? [var.bastion_security_group_id] : []
 
   instance_type         = "db.t3.medium"
