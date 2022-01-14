@@ -100,6 +100,12 @@ variable "module_prefix" {
   default     = ""
 }
 
+variable "external_dns_zone_type" {
+  description = "External-dns Helm chart AWS DNS zone type (public, private or empty for both)"
+  type        = string
+  default     = ""
+}
+
 locals {
   sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
 }

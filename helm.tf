@@ -35,3 +35,66 @@ resource "helm_release" "sentry" {
     )
   ]
 }
+
+resource "helm_release" "external_dns" {
+  chart      = "external-dns"
+  namespace  = "kube-system"
+  name       = "external-dns"
+  version    = "6.1.1"
+  repository = "https://charts.bitnami.com/bitnami"
+
+  set {
+    name  = "rbac.create"
+    value = false
+  }
+
+  set {
+    name  = "serviceAccount.create"
+    value = false
+  }
+
+  set {
+    name  = "serviceAccount.name"
+    value = kubernetes_service_account.external_dns_service_account.metadata.0.name
+  }
+
+  set {
+    name  = "rbac.pspEnabled"
+    value = false
+  }
+
+  set {
+    name  = "name"
+    value = "sentry-external-dns" # "${var.cluster_name}-external-dns"
+  }
+
+  set {
+    name  = "provider"
+    value = "aws"
+  }
+
+  set_string {
+    name  = "policy"
+    value = "sync"
+  }
+
+  set_string {
+    name  = "logLevel"
+    value = "warn" # var.external_dns_chart_log_level
+  }
+
+  set {
+    name  = "sources"
+    value = "{ingress,service}"
+  }
+
+  set_string {
+    name  = "aws.zoneType"
+    value = var.external_dns_zone_type
+  }
+
+  set_string {
+    name  = "aws.region"
+    value = var.aws_region
+  }
+}
