@@ -20,7 +20,7 @@ postgresql:
   enabled: false
 
 externalPostgresql:
-  host:
+  host: ${postgres_db_host}
   database: ${postgres_db_name}
   username: ${postgres_username}
   password: ${postgres_password}
