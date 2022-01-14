@@ -21,3 +21,20 @@
 #   cidr_blocks       = ["0.0.0.0/0"]
 #   security_group_id = aws_security_group.sentry_sg.id
 # }
+
+
+# Tines DB Security Group
+resource "aws_security_group" "sentry_rds_pg" {
+  name        = "sentry-rds-pg"
+  description = "Database security group for the Tines application"
+  vpc_id      = var.vpc_id
+}
+
+resource "aws_security_group_rule" "sentry_rds_pg_allow_from_bastion" {
+  type                     = "ingress"
+  from_port                = 5432
+  to_port                  = 5432
+  protocol                 = "tcp"
+  source_security_group_id = var.bastion_security_group_id
+  security_group_id        = aws_security_group.sentry_rds_pg.id
+}

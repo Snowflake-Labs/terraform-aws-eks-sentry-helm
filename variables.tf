@@ -46,6 +46,11 @@ variable "db_secrets_arn" {
   }
 }
 
+variable "bastion_security_group_id" {
+  description = "Security Group of the bastion host in the public subnet."
+  type        = string
+}
+
 # Optional Variables
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
@@ -104,6 +109,12 @@ variable "external_dns_zone_type" {
   description = "External-dns Helm chart AWS DNS zone type (public, private or empty for both)"
   type        = string
   default     = ""
+}
+
+variable "az_count" {
+  description = "Number of AZs to cover in a given region."
+  type        = string
+  default     = 1
 }
 
 locals {
