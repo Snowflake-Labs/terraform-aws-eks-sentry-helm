@@ -62,7 +62,7 @@ resource "aws_iam_role_policy_attachment" "external_dns_policy_attachment" {
   policy_arn = aws_iam_policy.external_dns_policy.arn
 }
 
-
+# 6. external-dns IRSA into the kube-system namespace.
 resource "kubernetes_service_account" "external_dns_service_account" {
   metadata {
     name      = "external-dns"
@@ -74,6 +74,7 @@ resource "kubernetes_service_account" "external_dns_service_account" {
   automount_service_account_token = true
 }
 
+# 7. EKS Cluster Role
 resource "kubernetes_cluster_role" "external_dns_cluster_role" {
   metadata {
     name = "external-dns"
@@ -96,6 +97,7 @@ resource "kubernetes_cluster_role" "external_dns_cluster_role" {
   }
 }
 
+# 8. EKS Cluster Role Binding
 resource "kubernetes_cluster_role_binding" "external_dns_binding" {
   metadata {
     name = "external-dns"
