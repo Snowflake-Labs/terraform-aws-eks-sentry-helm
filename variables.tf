@@ -34,6 +34,18 @@ variable "subdomain_cert_arn" {
   type        = string
 }
 
+variable "db_secrets_arn" {
+  type = string
+
+  validation {
+    condition = can(regex(
+      "^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$",
+      var.db_secrets_arn
+    ))
+    error_message = "The secrets arn doesn't match the regex ^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$."
+  }
+}
+
 # Optional Variables
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
