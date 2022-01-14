@@ -1,5 +1,5 @@
 # RDS Aurora PostGreSQL Version 11.9
-module "sentry_db" {
+module "sentry_rds_pg" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 2.0"
 

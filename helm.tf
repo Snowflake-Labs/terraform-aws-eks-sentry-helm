@@ -27,7 +27,7 @@ resource "helm_release" "sentry" {
         subdomain_cert_arn = "${var.subdomain_cert_arn}",
         allowed_cidr_blocks = "${var.allowed_cidr_blocks}",
 
-        postgres_db_host = "${module.sentry_db.this_rds_cluster_endpoint}"
+        postgres_db_host = "${module.sentry_rds_pg.this_rds_cluster_endpoint}"
         postgres_db_name = "${local.db_name}",
         postgres_username = "${local.db_user}",
         postgres_password = "${local.db_pass}",
@@ -80,7 +80,7 @@ resource "helm_release" "external_dns" {
 
   set {
     name  = "logLevel"
-    value = "warn" # var.external_dns_chart_log_level
+    value = "warning" # var.external_dns_chart_log_level
   }
 
   set {
