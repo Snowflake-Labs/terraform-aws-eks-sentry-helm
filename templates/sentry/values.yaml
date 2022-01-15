@@ -16,11 +16,8 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
 
-postgresql:
-  enabled: false
-
-externalPostgresql:
-  host: ${postgres_db_host}
-  database: ${postgres_db_name}
-  username: ${postgres_username}
-  password: ${postgres_password}
+# externalPostgresql:
+#   host: ${postgres_db_host}
+#   database: ${postgres_db_name}
+#   username: ${postgres_username}
+#   password: ${postgres_password}
