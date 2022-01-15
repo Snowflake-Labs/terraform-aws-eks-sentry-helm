@@ -99,4 +99,8 @@ resource "helm_release" "sentry" {
   ]
 
   depends_on = [helm_release.external_dns]
+  timeouts {
+    create = "60m"
+    delete = "2h"
+  }
 }
