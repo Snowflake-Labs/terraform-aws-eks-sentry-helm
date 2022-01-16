@@ -28,12 +28,6 @@ resource "helm_release" "lb_controller" {
 
   set {
     name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.lb_controller_role[0].arn
+    value = aws_iam_role.lb_controller_role.arn
   }
-
-  values = [
-    yamlencode(var.settings)
-  ]
-
-  depends_on = [kubernetes_namespace.lb_controller]
 }
