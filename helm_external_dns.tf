@@ -1,9 +1,10 @@
 resource "helm_release" "external_dns" {
-  chart      = "external-dns"
-  namespace  = "kube-system"
   name       = "external-dns"
-  version    = "6.1.1"
+  chart      = "external-dns"
   repository = "https://charts.bitnami.com/bitnami"
+  version    = "6.1.1"
+
+  namespace  = "kube-system"
 
   set {
     name  = "rbac.create"

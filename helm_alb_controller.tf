@@ -1,9 +1,9 @@
 resource "helm_release" "lb_controller" {
-  count      = var.enabled ? 1 : 0
-  name       = var.helm_chart_name
-  chart      = var.helm_chart_release_name
-  repository = var.helm_chart_repo
-  version    = var.helm_chart_version
+  name       = "aws-load-balancer-controller"
+  chart      = "aws-load-balancer-controller"
+  repository = "https://aws.github.io/eks-charts"
+  version    = "1.3.3"
+
   namespace  = "kube-system"
 
   set {
