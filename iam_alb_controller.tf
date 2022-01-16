@@ -307,7 +307,7 @@ data "aws_iam_policy_document" "lb_controller_irsa_assume_role_policy_doc" {
 # 4. sentry-alb-ingress IAM Role
 resource "aws_iam_role" "lb_controller_role" {
   name               = "sentry-alb-ingress" #  "${var.cluster_name}-alb-ingress"
-  assume_role_policy = data.aws_iam_policy_document.lb_controller_irsa_assume_role_policy_doc[0].json
+  assume_role_policy = data.aws_iam_policy_document.lb_controller_irsa_assume_role_policy_doc.json
 }
 
 # 5. external-dns IAM Role Policy Attachment

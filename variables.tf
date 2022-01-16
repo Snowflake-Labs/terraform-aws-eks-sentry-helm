@@ -118,6 +118,12 @@ variable "az_count" {
   default     = 1
 }
 
+variable "arn_format" {
+  type        = string
+  default     = "aws"
+  description = "ARNs identifier, usefull for GovCloud begin with `aws-us-gov-<region>`."
+}
+
 locals {
   sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
 }
