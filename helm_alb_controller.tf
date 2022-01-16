@@ -8,7 +8,7 @@ resource "helm_release" "lb_controller" {
 
   set {
     name  = "clusterName"
-    value = var.cluster_name
+    value = module.eks.cluster_id
   }
 
   set {
@@ -23,7 +23,7 @@ resource "helm_release" "lb_controller" {
 
   set {
     name  = "serviceAccount.name"
-    value = var.service_account_name
+    value =  "aws-alb-ingress-controller"
   }
 
   set {
