@@ -1,7 +1,3 @@
-locals {
-  oidc_url = replace(module.eks.cluster_oidc_issuer_url, "https://", "")
-}
-
 # 1. sentry-alb-ingress LB Controller Policy Document
 data "aws_iam_policy_document" "lb_controller_policy_doc" {
   statement {
