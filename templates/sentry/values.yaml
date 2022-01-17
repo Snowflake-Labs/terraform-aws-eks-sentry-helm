@@ -15,6 +15,7 @@ ingress:
     alb.ingress.kubernetes.io/inbound-cidrs: "${allowed_cidr_blocks_str}"
     alb.ingress.kubernetes.io/subnets:  "${private_subnet_ids_str}"
     alb.ingress.kubernetes.io/certificate-arn: "${subdomain_cert_arn}"
+    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     external-dns.alpha.kubernetes.io/hostname: "${sentry_dns_name}"
