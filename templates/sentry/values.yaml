@@ -5,6 +5,9 @@ user:
   email: "${sentry_email}"
   password: "${sentry_password}"
 
+nginx:
+  enabled: false
+
 ingress:
   enabled: true
   hostname: "${sentry_dns_name}"
