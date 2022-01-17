@@ -14,7 +14,7 @@ ingress:
   annotations:
     kubernetes.io/ingress.class: "alb"
     alb.ingress.kubernetes.io/scheme: "internet-facing"
-    alb.ingress.kubernetes.io/target-type: "instance"
+    alb.ingress.kubernetes.io/target-type: 'ip'
     alb.ingress.kubernetes.io/inbound-cidrs: "${allowed_cidr_blocks_str}"
     alb.ingress.kubernetes.io/subnets:  "${private_subnet_ids_str}"
     alb.ingress.kubernetes.io/certificate-arn: "${subdomain_cert_arn}"
