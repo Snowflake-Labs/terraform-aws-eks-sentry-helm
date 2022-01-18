@@ -1,0 +1,8 @@
+clusterName: ${eks_cluster_id}
+rbac:
+    create: true
+serviceAccount:
+  create: true
+  name: aws-alb-ingress-controller
+  annotations:
+    eks.amazonaws.com/role-arn: ${aws_iam_role_lb_controller_arn}

@@ -6,28 +6,15 @@ resource "helm_release" "lb_controller" {
 
   namespace  = "kube-system"
 
-  set {
-    name  = "clusterName"
-    value = module.eks.cluster_id
-  }
 
-  set {
-    name  = "rbac.create"
-    value = "true"
-  }
-
-  set {
-    name  = "serviceAccount.create"
-    value = "true"
-  }
-
-  set {
-    name  = "serviceAccount.name"
-    value =  "aws-alb-ingress-controller"
-  }
-
-  set {
-    name  = "serviceAccount.annotations.eks\\.amazonaws\\.com/role-arn"
-    value = aws_iam_role.lb_controller_role.arn
-  }
+  values = [
+    templatefile(
+      "${path.module}/templates/alb_controller_values.yaml",
+      {
+        aws_region = "${var.aws_region}",
+        eks_cluster_id = "${module.eks.cluster_id}",
+        aws_iam_role_lb_controller_arn = "${aws_iam_role.lb_controller_role.arn}",
+      }
+    )
+  ]
 }
