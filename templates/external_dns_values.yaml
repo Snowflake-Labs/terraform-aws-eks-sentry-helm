@@ -15,6 +15,3 @@ serviceAccount:
   name: ${external_dns_eks_service_account}
   annotations:
     eks.amazonaws.com/role-arn: ${aws_iam_role_external_dns_arn}
-txtOwnerId: eks-cluster
-txtPrefix: external-dns
-

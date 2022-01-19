@@ -5,6 +5,7 @@ resource "helm_release" "external_dns" {
   version    = "6.1.1"
 
   namespace = "kube-system"
+  wait      = false
 
   values = [
     templatefile(
