@@ -37,8 +37,10 @@ module "eks" {
   map_users    = var.map_users
   map_accounts = var.map_accounts
 
-  timeouts {
-    delete = "15m"
+  cluster_timeouts = {
+    create = "30m"
+    delete = "30m"
+    update = "15m"
   }
 }
 

@@ -2,6 +2,10 @@ resource "kubernetes_namespace" "sentry" {
   metadata {
     name = var.sentry_namespace
   }
+
+  timeouts {
+    delete = "30m"
+  }
 }
 
 resource "helm_release" "sentry" {
