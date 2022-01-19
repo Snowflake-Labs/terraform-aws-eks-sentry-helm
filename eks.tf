@@ -37,11 +37,8 @@ module "eks" {
   map_users    = var.map_users
   map_accounts = var.map_accounts
 
-  cluster_timeouts = {
-    create = "30m"
-    delete = "30m"
-    update = "15m"
-  }
+  cluster_create_timeout = "30m"
+  cluster_delete_timeout = "30m"
 }
 
 data "aws_eks_cluster" "cluster" {
