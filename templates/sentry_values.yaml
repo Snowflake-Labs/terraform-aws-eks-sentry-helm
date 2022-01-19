@@ -13,7 +13,7 @@ ingress:
   hostname: "${sentry_dns_name}"
   regexPathStyle: "aws-alb"
   tls:
-    hosts:
+    - hosts:
       - "${sentry_dns_name}"
   # alb:
   #   httpRedirect: true
