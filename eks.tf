@@ -8,8 +8,8 @@ module "eks" {
   vpc_id  = var.vpc_id
   subnets = var.private_subnet_ids
 
-  enable_irsa = true
-  cluster_endpoint_private_access = true
+  enable_irsa                          = true
+  cluster_endpoint_private_access      = true
   cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
   cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
@@ -36,6 +36,10 @@ module "eks" {
 
   map_users    = var.map_users
   map_accounts = var.map_accounts
+
+  timeouts {
+    delete = "15m"
+  }
 }
 
 data "aws_eks_cluster" "cluster" {
