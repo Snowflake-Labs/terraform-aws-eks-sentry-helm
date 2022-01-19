@@ -14,10 +14,9 @@ resource "helm_release" "sentry" {
   repository = "https://sentry-kubernetes.github.io/charts"
   version    = "12.0.0"
 
-  namespace    = kubernetes_namespace.sentry.metadata[0].name
-  timeout      = 600
-  wait         = false
-  force_update = true
+  namespace = kubernetes_namespace.sentry.metadata[0].name
+  timeout   = 600
+  wait      = false
 
   values = [
     templatefile(
@@ -38,10 +37,5 @@ resource "helm_release" "sentry" {
         # postgres_password       = "${local.db_pass}",
       }
     )
-  ]
-
-  depends_on = [
-    helm_release.external_dns,
-    helm_release.lb_controller,
   ]
 }
