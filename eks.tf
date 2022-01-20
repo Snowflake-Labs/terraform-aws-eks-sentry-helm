@@ -34,6 +34,64 @@ module "eks" {
     }
   }
 
+  cluster_security_group_additional_rules = {
+    admin_access = {
+      description = "Admin ingress to Kubernetes API"
+      cidr_blocks = var.allowed_cidr_blocks
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+    }
+  }
+
+  node_security_group_additional_rules = {
+    ingress_cluster_9443 = {
+      description                   = "Cluster API to node groups webhook"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
+    ingress_cluster_8443 = {
+      description                   = "Cluster API to node groups webhook"
+      protocol                      = "tcp"
+      from_port                     = 8443
+      to_port                       = 8443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
+    ingress_cluster_80 = {
+      description = "Internal communcation 80"
+      protocol    = "tcp"
+      from_port   = 80
+      to_port     = 80
+      type        = "ingress"
+      self        = true
+    }
+
+    engress_cluster_80 = {
+      description = "Internal communcation 80"
+      protocol    = "tcp"
+      from_port   = 80
+      to_port     = 80
+      type        = "egress"
+      self        = true
+    }
+
+    engress_cluster_5432 = {
+      description              = "Internal communcation to postgres"
+      protocol                 = "tcp"
+      from_port                = 5432
+      to_port                  = 5432
+      type                     = "egress"
+      source_security_group_id = module.security_group_database.security_group_id
+    }
+  }
+
   map_users    = var.map_users
   map_accounts = var.map_accounts
 
