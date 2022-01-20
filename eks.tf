@@ -119,6 +119,20 @@ module "eks" {
   cluster_delete_timeout = "30m"
 }
 
+resource "kubernetes_namespace" "sentry" {
+  metadata {
+    name = var.sentry_namespace
+  }
+
+  timeouts {
+    delete = "30m"
+  }
+
+  depends_on = [
+    module.eks
+  ]
+}
+
 data "aws_eks_cluster" "cluster" {
   name = module.eks.cluster_id
 }
