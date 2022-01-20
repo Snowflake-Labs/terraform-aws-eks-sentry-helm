@@ -11,11 +11,8 @@ module "eks" {
   subnet_ids  = concat(var.private_subnet_ids, var.private_subnet_ids)
   enable_irsa = true
 
-  cluster_enabled_log_types            = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  cluster_log_retention_in_days        = 0
-  enable_flow_log                      = true
-  create_flow_log_cloudwatch_iam_role  = true
-  create_flow_log_cloudwatch_log_group = true
+  cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  cluster_log_retention_in_days = 0
 
   eks_managed_node_group_defaults = {
     ami_type       = "AL2_x86_64"
@@ -112,11 +109,10 @@ module "eks" {
     }
   }
 
-  map_users    = var.map_users
-  map_accounts = var.map_accounts
-
-  cluster_create_timeout = "30m"
-  cluster_delete_timeout = "30m"
+  cluster_timeouts {
+    create = "30m"
+    delete = "30m"
+  }
 }
 
 resource "kubernetes_namespace" "sentry" {
