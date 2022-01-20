@@ -12,18 +12,11 @@ ingress:
   enabled: true
   hostname: ${sentry_dns_name}
   regexPathStyle: aws-alb
-  tls:
-    - hosts:
-      - ${sentry_dns_name}
-  alb:
-    httpRedirect: true
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
     alb.ingress.kubernetes.io/subnets:  ${public_subnet_ids_str}
-    alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
-    alb.ingress.kubernetes.io/ssl-policy: ELBSecurityPolicy-TLS-1-2-2017-01
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
