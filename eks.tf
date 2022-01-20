@@ -2,33 +2,53 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "17.24.0"
 
-  cluster_name    = var.eks_cluster_name
-  cluster_version = var.kubernetes_version
-
-  vpc_id  = var.vpc_id
-  subnets = var.private_subnet_ids
-
-  enable_irsa                          = true
+  cluster_name                         = var.eks_cluster_name
+  cluster_version                      = var.kubernetes_version
   cluster_endpoint_private_access      = true
   cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
-  cluster_enabled_log_types     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-  cluster_log_retention_in_days = 0
+  vpc_id      = var.vpc_id
+  subnet_ids  = concat(var.private_subnet_ids, var.private_subnet_ids)
+  enable_irsa = true
 
-  node_groups_defaults = {
-    ami_type  = "AL2_x86_64"
-    disk_size = 50
+  cluster_enabled_log_types            = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  cluster_log_retention_in_days        = 0
+  enable_flow_log                      = true
+  create_flow_log_cloudwatch_iam_role  = true
+  create_flow_log_cloudwatch_log_group = true
+
+  eks_managed_node_group_defaults = {
+    ami_type       = "AL2_x86_64"
+    disk_size      = 50
+    instance_types = ["m6i.large", "m5.large", "m5n.large", "m5zn.large"]
   }
 
-  node_groups = {
-    node-group-1 = {
-      desired_capacity = 3
-      max_capacity     = 3
-      min_capacity     = 3
+  eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = 1
+      max_size     = 3
+      desired_size = 1
 
       instance_types = ["t2.medium"]
       capacity_type  = "ON_DEMAND"
-      k8s_labels = {
+      labels = {
+        environment = "${var.env}"
+      }
+
+      # taints = {
+      #   dedicated = {
+      #     key    = "dedicated"
+      #     value  = "gpuGroup"
+      #     effect = "NO_SCHEDULE"
+      #   }
+      # }
+
+      update_config = {
+        max_unavailable_percentage = 50 # or set `max_unavailable`
+      }
+
+      tags = {
         environment = "${var.env}"
       }
     }
