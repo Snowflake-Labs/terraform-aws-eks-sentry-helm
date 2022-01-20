@@ -21,7 +21,6 @@ module "eks" {
   }
 
   eks_managed_node_groups = {
-    blue = {}
     green = {
       min_size     = 1
       max_size     = 3
@@ -33,16 +32,8 @@ module "eks" {
         environment = "${var.env}"
       }
 
-      # taints = {
-      #   dedicated = {
-      #     key    = "dedicated"
-      #     value  = "gpuGroup"
-      #     effect = "NO_SCHEDULE"
-      #   }
-      # }
-
       update_config = {
-        max_unavailable_percentage = 50 # or set `max_unavailable`
+        max_unavailable_percentage = 80 # or set `max_unavailable`
       }
 
       tags = {
