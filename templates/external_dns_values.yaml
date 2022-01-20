@@ -6,7 +6,7 @@ sources:
   - service
   - ingress
 logFormat: json
-policy: sync
+policy: upsert-only
 rbac:
   create: true
   pspEnabled: false
