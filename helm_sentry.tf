@@ -4,9 +4,8 @@ resource "helm_release" "sentry" {
   repository = "https://sentry-kubernetes.github.io/charts"
   version    = "12.0.0"
 
-  namespace = kubernetes_namespace.sentry.metadata[0].name
-  timeout   = 600
-  wait      = false
+  timeout = 600
+  wait    = false
 
   values = [
     templatefile(
