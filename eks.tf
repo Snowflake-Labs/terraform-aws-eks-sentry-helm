@@ -99,17 +99,17 @@ module "eks" {
       self        = true
     }
 
-    engress_cluster_5432 = {
-      description              = "Internal communcation to postgres"
-      protocol                 = "tcp"
-      from_port                = 5432
-      to_port                  = 5432
-      type                     = "egress"
-      source_security_group_id = module.security_group_database.security_group_id
-    }
+    # engress_cluster_5432 = {
+    #   description              = "Internal communcation to postgres"
+    #   protocol                 = "tcp"
+    #   from_port                = 5432
+    #   to_port                  = 5432
+    #   type                     = "egress"
+    #   source_security_group_id = module.security_group_database.security_group_id
+    # }
   }
 
-  cluster_timeouts {
+  cluster_timeouts = {
     create = "30m"
     delete = "30m"
   }
