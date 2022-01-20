@@ -83,6 +83,12 @@ variable "private_subnet_ids" {
   default     = []
 }
 
+variable "public_subnet_ids" {
+  description = "Publlic subnet IDs to add kubernetes cluster on."
+  type        = list(string)
+  default     = []
+}
+
 variable "map_users" {
   description = "Additional IAM users to add to the aws-auth configmap."
   type = list(object({
@@ -127,3 +133,5 @@ variable "arn_format" {
 locals {
   sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
 }
+
+
