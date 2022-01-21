@@ -17,4 +17,3 @@ service:
   externalPort: 9000
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /_health/
-    service.beta.kubernetes.io/aws-load-balancer-subnets: ${private_subnet_ids_str}
