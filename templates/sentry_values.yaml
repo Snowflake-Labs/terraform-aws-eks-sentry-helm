@@ -10,3 +10,9 @@ nginx:
 
 ingress:
   enabled: false
+# service:
+#   name: sentry
+#   type: ClusterIP
+#   externalPort: 9000
+#   annotations:
+#     service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /_health/
