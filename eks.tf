@@ -54,11 +54,11 @@ module "eks" {
   }
 
   node_security_group_additional_rules = {
-    ingress_cluster_443 = {
+    ingress_cluster_9443 = {
       description                   = "Cluster API to node groups webhook"
       protocol                      = "tcp"
-      from_port                     = 443
-      to_port                       = 443
+      from_port                     = 9443
+      to_port                       = 9443
       type                          = "ingress"
       source_cluster_security_group = true
     }
