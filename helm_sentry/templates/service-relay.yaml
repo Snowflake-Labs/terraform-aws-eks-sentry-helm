@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "sentry.fullname" . }}-relay
+  annotations:
+    {{- range $key, $value := .Values.service.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
+<<<<<<< HEAD
+    {{- range $key, $value := .Values.relay.service.annotations }}
+      {{ $key }}: {{ $value | quote }}
+=======
+    {{- if and (.Values.ingress.enabled) (eq (default "nginx" .Values.ingress.regexPathStyle) "aws-alb") }}
+      alb.ingress.kubernetes.io/healthcheck-path: "{{ template "relay.healthCheck.requestPath" . }}"
+      alb.ingress.kubernetes.io/healthcheck-port: "{{ template "relay.port" . }}"
+>>>>>>> b3ccc44a4243bfea489b547aac19df5d975924de
+    {{- end }}
+    {{- if and (.Values.ingress.enabled) (eq (default "nginx" .Values.ingress.regexPathStyle) "gke") }}
+      cloud.google.com/backend-config: '{"ports": {"{{ template "relay.port" . }}":"{{ include "sentry.fullname" . }}-relay"}}'
+    {{- end }}
+  labels:
+    app: {{ template "sentry.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - port: {{ template "relay.port" . }}
+    targetPort: {{ template "relay.port" }}
+    protocol: TCP
+    name: {{ .Values.service.name }}-relay
+  selector:
+    app: {{ template "sentry.fullname" . }}
+    role: relay
