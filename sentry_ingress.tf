@@ -14,10 +14,12 @@ resource "kubernetes_ingress" "sentry_ingress" {
   metadata {
     name      = "sentry-ingress"
     namespace = "default"
+
     labels = {
       app         = "sentry"
       environment = var.env
     }
+
     annotations = {
       "kubernetes.io/ingress.class"               = "alb"
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
@@ -37,7 +39,6 @@ resource "kubernetes_ingress" "sentry_ingress" {
       http {
         path {
           path = "/api/0/*"
-
           backend {
             service_name = data.kubernetes_service.sentry_web.metadata.0.name
             service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
@@ -55,8 +56,8 @@ resource "kubernetes_ingress" "sentry_ingress" {
         path {
           path = "/*"
           backend {
-            service_name = data.kubernetes_service.sentry_relay.metadata.0.name
-            service_port = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+            service_name = data.kubernetes_service.sentry_web.metadata.0.name
+            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
           }
         }
       }
