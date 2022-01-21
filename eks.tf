@@ -22,9 +22,9 @@ module "eks" {
 
   eks_managed_node_groups = {
     node-group-1 = {
-      min_size     = 1
+      min_size     = 3
       max_size     = 5
-      desired_size = 1
+      desired_size = 3
 
       instance_types = ["t3.large"]
       capacity_type  = "ON_DEMAND"
@@ -54,20 +54,11 @@ module "eks" {
   }
 
   node_security_group_additional_rules = {
-    ingress_cluster_9443 = {
+    ingress_cluster_443 = {
       description                   = "Cluster API to node groups webhook"
       protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-
-    ingress_cluster_8443 = {
-      description                   = "Cluster API to node groups webhook"
-      protocol                      = "tcp"
-      from_port                     = 8443
-      to_port                       = 8443
+      from_port                     = 443
+      to_port                       = 443
       type                          = "ingress"
       source_cluster_security_group = true
     }
