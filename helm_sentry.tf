@@ -40,8 +40,9 @@ resource "helm_release" "sentry" {
   name  = "sentry"
   chart = "${path.module}/helm_sentry/"
 
-  timeout = 600
-  wait    = false
+  timeout           = 600
+  wait              = false
+  dependency_update = true
 
   values = [
     templatefile(
