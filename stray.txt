@@ -19,3 +19,10 @@
     alb.ingress.kubernetes.io/subnets:  ${public_subnet_ids_str}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
+
+service:
+  name: sentry
+  type: ClusterIP
+  externalPort: 9000
+  annotations:
+    # service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/relay/healthcheck/ready/
