@@ -17,7 +17,7 @@ ingress:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
-    # alb.ingress.kubernetes.io/subnets: ${public_subnet_ids_str}
+    alb.ingress.kubernetes.io/subnets: ${public_subnet_ids_str}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
     external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
 
