@@ -5,10 +5,11 @@ module "eks" {
   cluster_name                         = var.eks_cluster_name
   cluster_version                      = var.kubernetes_version
   cluster_endpoint_private_access      = true
+  cluster_endpoint_public_access       = true
   cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
   vpc_id      = var.vpc_id
-  subnet_ids  = concat(var.public_subnet_ids, var.private_subnet_ids)
+  subnet_ids  = var.private_subnet_ids # concat(var.public_subnet_ids, var.private_subnet_ids)
   enable_irsa = true
 
   cluster_enabled_log_types              = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
@@ -26,10 +27,11 @@ module "eks" {
       max_size     = 5
       desired_size = 3
 
-      instance_types = ["t3.large"]
+      instance_types = ["t3.xlarge"]
       capacity_type  = "ON_DEMAND"
       labels = {
         environment = "${var.env}"
+        app         = "sentry"
       }
 
       update_config = {
