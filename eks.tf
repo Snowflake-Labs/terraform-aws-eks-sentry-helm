@@ -12,7 +12,13 @@ module "eks" {
   subnet_ids  = concat(var.public_subnet_ids, var.private_subnet_ids)
   enable_irsa = true
 
-  cluster_enabled_log_types              = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+  cluster_enabled_log_types = [
+    "api",
+    "audit",
+    "authenticator",
+    "controllerManager",
+    "scheduler"
+  ]
   cloudwatch_log_group_retention_in_days = 0
 
   eks_managed_node_group_defaults = {

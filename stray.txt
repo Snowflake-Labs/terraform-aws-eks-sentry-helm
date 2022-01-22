@@ -26,3 +26,8 @@ service:
   externalPort: 9000
   annotations:
     # service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /api/relay/healthcheck/ready/
+
+
+
+Command to get manifest.yaml
+kubectl get $(kubectl api-resources | awk '{print $1}' | tail -n +2 | tr '\n' ',' | sed s/,\$//) -o yaml > manifest.yaml
