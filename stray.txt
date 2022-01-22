@@ -31,3 +31,6 @@ service:
 
 Command to get manifest.yaml
 kubectl get $(kubectl api-resources | awk '{print $1}' | tail -n +2 | tr '\n' ',' | sed s/,\$//) -o yaml > manifest.yaml
+
+
+service.beta.kubernetes.io/aws-load-balancer-subnets
