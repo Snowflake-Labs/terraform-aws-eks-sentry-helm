@@ -62,40 +62,40 @@ module "eks" {
   }
 
   node_security_group_additional_rules = {
-    ingress_cluster_9443 = {
-      description                   = "Cluster API to node groups webhook"
-      protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
+    # ingress_cluster_9443 = {
+    #   description                   = "Cluster API to node groups webhook"
+    #   protocol                      = "tcp"
+    #   from_port                     = 9443
+    #   to_port                       = 9443
+    #   type                          = "ingress"
+    #   source_cluster_security_group = true
+    # }
 
-    ingress_cluster_80 = {
+    ingress_cluster_all_ports = {
       description = "Internal communcation 80"
       protocol    = "tcp"
-      from_port   = 80
-      to_port     = 80
+      from_port   = 0
+      to_port     = 0
       type        = "ingress"
       self        = true
     }
 
-    engress_cluster_80 = {
+    engress_cluster_all_port = {
       description = "Internal communcation 80"
       protocol    = "tcp"
-      from_port   = 80
-      to_port     = 80
+      from_port   = 0
+      to_port     = 0
       type        = "egress"
       self        = true
     }
 
     # engress_cluster_5432 = {
-    #   description              = "Internal communcation to postgres"
-    #   protocol                 = "tcp"
-    #   from_port                = 5432
-    #   to_port                  = 5432
-    #   type                     = "egress"
-    #   source_security_group_id = module.security_group_database.security_group_id
+    #   description = "Internal communcation to postgres"
+    #   protocol    = "tcp"
+    #   from_port   = 5432
+    #   to_port     = 5432
+    #   type        = "egress"
+    #   self        = true
     # }
   }
 
