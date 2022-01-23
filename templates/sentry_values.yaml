@@ -35,16 +35,15 @@ sentry:
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
         service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
 
-snuba:
-  api:
-    service:
-      annotations:
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/api/relay/healthcheck/ready/"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "traffic-port"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "3"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
+relay:
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/api/relay/healthcheck/ready/"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "traffic-port"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "3"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
 
 service:
   name: sentry
