@@ -80,7 +80,7 @@ module "eks" {
       self        = true
     }
 
-    engress_cluster_all_port = {
+    engress_cluster_all_ports = {
       description = "Internal communcation 80"
       protocol    = "tcp"
       from_port   = 0
