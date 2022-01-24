@@ -61,43 +61,52 @@ module "eks" {
     }
   }
 
-  # node_security_group_additional_rules = {
-  # ingress_cluster_9443 = {
-  #   description                   = "Cluster API to node groups webhook"
-  #   protocol                      = "tcp"
-  #   from_port                     = 9443
-  #   to_port                       = 9443
-  #   type                          = "ingress"
-  #   source_cluster_security_group = true
-  # }
+  node_security_group_additional_rules = {
+    ingress_cluster_9443 = {
+      description                   = "Cluster API to node groups webhook"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
 
-  # egress_cluster_all_ports = {
-  #   description = "Internal communcation 80"
-  #   protocol    = "tcp"
-  #   from_port   = 0
-  #   to_port     = 0
-  #   type        = "egress"
-  #   self        = true
-  # }
+    egress_cluster_all_ports = {
+      description                   = "Internal communcation All port"
+      protocol                      = "tcp"
+      from_port                     = 0
+      to_port                       = 0
+      type                          = "egress"
+      source_cluster_security_group = true
+    }
 
-  # ingress_cluster_all_ports = {
-  #   description = "Internal communcation 80"
-  #   protocol    = "tcp"
-  #   from_port   = 0
-  #   to_port     = 0
-  #   type        = "ingress"
-  #   self        = true
-  # }
+    ingress_cluster_all_ports = {
+      description = "Internal communcation 1025-65535"
+      protocol    = "tcp"
+      from_port   = 1025
+      to_port     = 65535
+      type        = "ingress"
+      self        = true
+    }
 
-  # engress_cluster_5432 = {
-  #   description = "Internal communcation to postgres"
-  #   protocol    = "tcp"
-  #   from_port   = 5432
-  #   to_port     = 5432
-  #   type        = "egress"
-  #   self        = true
-  # }
-  # }
+    ingress_cluster_443 = {
+      description = "Internal communcation 1025-65535"
+      protocol    = "tcp"
+      from_port   = 443
+      to_port     = 443
+      type        = "ingress"
+      self        = true
+    }
+
+    engress_cluster_all_traffic = {
+      description = "Internal communcation to postgres"
+      protocol    = "all"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      self        = ["0.0.0.0/0"]
+    }
+  }
 
   cluster_timeouts = {
     create = "30m"
