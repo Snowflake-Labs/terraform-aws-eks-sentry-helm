@@ -71,21 +71,21 @@ module "eks" {
     #   source_cluster_security_group = true
     # }
 
+    egress_cluster_all_ports = {
+      description = "Internal communcation 80"
+      protocol    = "tcp"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      self        = true
+    }
+
     ingress_cluster_all_ports = {
       description = "Internal communcation 80"
       protocol    = "tcp"
       from_port   = 0
       to_port     = 0
       type        = "ingress"
-      self        = true
-    }
-
-    engress_cluster_all_ports = {
-      description = "Internal communcation 80"
-      protocol    = "tcp"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
       self        = true
     }
 

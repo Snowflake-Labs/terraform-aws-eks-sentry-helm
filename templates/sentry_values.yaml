@@ -8,44 +8,5 @@ user:
 nginx:
   enabled: false
 
-ingress:
-  enabled: true
-  hostname: ${sentry_dns_name}
-  regexPathStyle: aws-alb
-  annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
-    alb.ingress.kubernetes.io/subnets: ${private_subnet_ids_str}
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-    external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
-
 rabbitmq:
   enabled: false
-
-sentry:
-  web:
-    service:
-      annotations:
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/_health/"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "traffic-port"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "3"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
-        service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
-
-relay:
-  service:
-    annotations:
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: "/api/relay/healthcheck/ready/"
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "traffic-port"
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-healthy-threshold: "3"
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-unhealthy-threshold: "3"
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-timeout: "10"
-      service.beta.kubernetes.io/aws-load-balancer-healthcheck-interval: "10"
-
-service:
-  name: sentry
-  type: ClusterIP
-  externalPort: 9000
