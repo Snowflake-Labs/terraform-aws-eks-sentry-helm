@@ -86,7 +86,7 @@ module "eks" {
       from_port   = 0
       to_port     = 0
       type        = "egress"
-      self        = ["0.0.0.0/0"]
+      cidr_blocks = ["0.0.0.0/0"]
     }
 
     ingress_cluster_all_ports = {
