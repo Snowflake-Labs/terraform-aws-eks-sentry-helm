@@ -72,12 +72,21 @@ module "eks" {
     }
 
     egress_cluster_all_ports = {
-      description                   = "Internal communcation All port"
+      description                   = "Internal communcation All port to cluster SG"
       protocol                      = "tcp"
       from_port                     = 0
       to_port                       = 0
       type                          = "egress"
       source_cluster_security_group = true
+    }
+
+    engress_node_group_all_traffic = {
+      description = "Internal communcation to postgres"
+      protocol    = "all"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      self        = ["0.0.0.0/0"]
     }
 
     ingress_cluster_all_ports = {
@@ -98,14 +107,6 @@ module "eks" {
       self        = true
     }
 
-    engress_cluster_all_traffic = {
-      description = "Internal communcation to postgres"
-      protocol    = "all"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
-      self        = ["0.0.0.0/0"]
-    }
   }
 
   cluster_timeouts = {
