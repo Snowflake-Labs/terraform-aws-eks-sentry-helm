@@ -59,6 +59,24 @@ module "eks" {
       to_port     = 443
       type        = "ingress"
     }
+
+    all_inboud_within_cluster = {
+      description = "Internal communcation to control plane."
+      protocol    = "-1"
+      from_port   = 0
+      to_port     = 0
+      type        = "ingress"
+      self        = true
+    }
+
+    engress_to_default_all_traffic = {
+      description = "External access for control plane."
+      protocol    = "all"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
   }
 
   node_security_group_additional_rules = {
