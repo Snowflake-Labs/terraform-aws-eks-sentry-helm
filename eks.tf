@@ -9,7 +9,7 @@ module "eks" {
   cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
   vpc_id      = var.vpc_id
-  subnet_ids  = contact(var.private_subnet_ids, var.public_subnet_ids)
+  subnet_ids  = concat(var.private_subnet_ids, var.public_subnet_ids)
   enable_irsa = true
 
   cluster_enabled_log_types = [
