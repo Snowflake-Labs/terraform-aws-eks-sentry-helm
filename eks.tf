@@ -126,7 +126,7 @@ module "eks" {
     }
 
     engress_to_default_all_traffic = {
-      description = "Node group's access to the outside."
+      description = "Node groups access to the outside."
       protocol    = "all"
       from_port   = 0
       to_port     = 0
