@@ -81,7 +81,16 @@ module "eks" {
 
   node_security_group_additional_rules = {
     ingress_from_cluster_port_9443 = {
-      description                   = "Internal communcation 443"
+      description                   = "control-plan to data-plan ingress 9443"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
+    ingress_from_cluster_port_443 = {
+      description                   = "control-plan to data-plan ingress 443"
       protocol                      = "tcp"
       from_port                     = 9443
       to_port                       = 9443
@@ -108,7 +117,7 @@ module "eks" {
     }
 
     egress_to_cluster_all_ports = {
-      description                   = "Internal communcation All port to cluster SG"
+      description                   = "Internal communcation to all ports on control-plane or cluster SG."
       protocol                      = "tcp"
       from_port                     = 0
       to_port                       = 0
@@ -117,7 +126,7 @@ module "eks" {
     }
 
     engress_to_default_all_traffic = {
-      description = "Internal communcation to postgres"
+      description = "Node group's access to the outside."
       protocol    = "all"
       from_port   = 0
       to_port     = 0
