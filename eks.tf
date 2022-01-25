@@ -80,15 +80,6 @@ module "eks" {
       source_cluster_security_group = true
     }
 
-    ingress_from_cluster_port_443 = {
-      description                   = "control-plane to data-plane ingress 443"
-      protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-
     ingress_self_all = {
       description = "Node to node all ports/protocols"
       protocol    = "-1"
