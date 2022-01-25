@@ -62,6 +62,15 @@ module "eks" {
   }
 
   node_security_group_additional_rules = {
+    ingress_from_cluster_port_9443 = {
+      description                   = "Internal communcation 443"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
     ingress_from_node_group_to_port_range = {
       description = "Internal communcation 1025-65535"
       protocol    = "tcp"
