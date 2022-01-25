@@ -14,3 +14,29 @@ rabbitmq:
 postgresql:
   enabled: true
   postgres_password: ${postgres_password}
+
+sentry:
+  web:
+    service:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: "/_health/"
+        alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
+
+relay:
+  service:
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: "/api/relay/healthcheck/ready/"
+      alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
+
+ingress:
+  enabled: true
+  hostname: ${sentry_dns_name}
+  regexPathStyle: aws-alb
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
+    alb.ingress.kubernetes.io/subnets: ${public_subnet_ids_str}
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 443}]'
+    external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
