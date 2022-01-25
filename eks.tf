@@ -60,8 +60,37 @@ module "eks" {
       type        = "ingress"
     }
 
-    all_inboud_within_cluster = {
-      description = "Internal communcation to control plane."
+    egress_nodes_ephemeral_ports_tcp = {
+      description                = "To node 1025-65535"
+      protocol                   = "tcp"
+      from_port                  = 1025
+      to_port                    = 65535
+      type                       = "egress"
+      source_node_security_group = true
+    }
+  }
+
+  node_security_group_additional_rules = {
+    ingress_from_cluster_port_9443 = {
+      description                   = "control-plane to data-plane ingress 9443"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
+    ingress_from_cluster_port_443 = {
+      description                   = "control-plane to data-plane ingress 443"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
+
+    ingress_self_all = {
+      description = "Node to node all ports/protocols"
       protocol    = "-1"
       from_port   = 0
       to_port     = 0
@@ -69,69 +98,14 @@ module "eks" {
       self        = true
     }
 
-    engress_to_default_all_traffic = {
-      description = "External access for control plane."
-      protocol    = "all"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  }
-
-  node_security_group_additional_rules = {
-    ingress_from_cluster_port_9443 = {
-      description                   = "control-plan to data-plan ingress 9443"
-      protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-
-    ingress_from_cluster_port_443 = {
-      description                   = "control-plan to data-plan ingress 443"
-      protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      type                          = "ingress"
-      source_cluster_security_group = true
-    }
-
-    ingress_from_node_group_to_port_range = {
-      description = "Internal communcation 1025-65535"
-      protocol    = "tcp"
-      from_port   = 1025
-      to_port     = 65535
-      type        = "ingress"
-      self        = true
-    }
-
-    ingress_from_cluster_port_443 = {
-      description = "Internal communcation 443"
-      protocol    = "tcp"
-      from_port   = 443
-      to_port     = 443
-      type        = "ingress"
-      self        = true
-    }
-
-    egress_to_cluster_all_ports = {
-      description                   = "Internal communcation to all ports on control-plane or cluster SG."
-      protocol                      = "tcp"
-      from_port                     = 0
-      to_port                       = 0
-      type                          = "egress"
-      source_cluster_security_group = true
-    }
-
-    engress_to_default_all_traffic = {
-      description = "Node groups access to the outside."
-      protocol    = "all"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"]
+    egress_all = {
+      description      = "Node all egress"
+      protocol         = "-1"
+      from_port        = 0
+      to_port          = 0
+      type             = "egress"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
     }
   }
 
