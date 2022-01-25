@@ -62,25 +62,7 @@ module "eks" {
   }
 
   node_security_group_additional_rules = {
-    egress_cluster_all_ports = {
-      description                   = "Internal communcation All port to cluster SG"
-      protocol                      = "tcp"
-      from_port                     = 0
-      to_port                       = 0
-      type                          = "egress"
-      source_cluster_security_group = true
-    }
-
-    engress_node_group_all_traffic = {
-      description = "Internal communcation to postgres"
-      protocol    = "all"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-
-    ingress_cluster_port_range = {
+    ingress_from_node_group_to_port_range = {
       description = "Internal communcation 1025-65535"
       protocol    = "tcp"
       from_port   = 1025
@@ -89,13 +71,31 @@ module "eks" {
       self        = true
     }
 
-    ingress_cluster_443 = {
+    ingress_from_cluster_port_443 = {
       description = "Internal communcation 443"
       protocol    = "tcp"
       from_port   = 443
       to_port     = 443
       type        = "ingress"
       self        = true
+    }
+
+    egress_to_cluster_all_ports = {
+      description                   = "Internal communcation All port to cluster SG"
+      protocol                      = "tcp"
+      from_port                     = 0
+      to_port                       = 0
+      type                          = "egress"
+      source_cluster_security_group = true
+    }
+
+    engress_to_default_all_traffic = {
+      description = "Internal communcation to postgres"
+      protocol    = "all"
+      from_port   = 0
+      to_port     = 0
+      type        = "egress"
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
 
