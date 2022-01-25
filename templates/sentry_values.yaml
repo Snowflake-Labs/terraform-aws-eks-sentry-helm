@@ -18,14 +18,14 @@ sentry:
   web:
     service:
       annotations:
-        alb.ingress.kubernetes.io/healthcheck-path: "/_health/"
-        alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
+        alb.ingress.kubernetes.io/healthcheck-path: /_health/
+        alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
 relay:
   service:
     annotations:
-      alb.ingress.kubernetes.io/healthcheck-path: "/api/relay/healthcheck/ready/"
-      alb.ingress.kubernetes.io/healthcheck-port: "traffic-port"
+      alb.ingress.kubernetes.io/healthcheck-path: /api/relay/healthcheck/ready/
+      alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
 ingress:
   enabled: true
