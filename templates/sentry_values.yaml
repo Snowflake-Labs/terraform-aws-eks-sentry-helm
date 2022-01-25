@@ -10,3 +10,7 @@ nginx:
 
 rabbitmq:
   enabled: false
+
+postgresql:
+  enabled: true
+  postgres_password: ${postgres_password}
