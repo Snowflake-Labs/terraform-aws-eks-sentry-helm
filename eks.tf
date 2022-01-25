@@ -89,7 +89,7 @@ module "eks" {
       cidr_blocks = ["0.0.0.0/0"]
     }
 
-    ingress_cluster_all_ports = {
+    ingress_cluster_port_range = {
       description = "Internal communcation 1025-65535"
       protocol    = "tcp"
       from_port   = 1025
@@ -99,7 +99,7 @@ module "eks" {
     }
 
     ingress_cluster_443 = {
-      description = "Internal communcation 1025-65535"
+      description = "Internal communcation 443"
       protocol    = "tcp"
       from_port   = 443
       to_port     = 443
