@@ -37,9 +37,9 @@ resource "kubernetes_ingress" "sentry_ingress" {
       "alb.ingress.kubernetes.io/listen-ports"    = jsonencode([{ HTTP = 80 }]) #, HTTPS = 443
       "alb.ingress.kubernetes.io/inbound-cidrs"   = "${join(",", var.allowed_cidr_blocks)}"
       "alb.ingress.kubernetes.io/subnets"         = "${join(",", var.public_subnet_ids)}"
+      "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
+      "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
       "external-dns.alpha.kubernetes.io/hostname" = local.sentry_dns_name
-      # "alb.ingress.kubernetes.io/actions.ssl-redirect" = ""
-      # "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
     }
   }
 
