@@ -26,3 +26,12 @@ relay:
 
 ingress:
   enabled: false
+
+postgresql:
+  enabled: true
+  nameOverride: sentry-postgresql
+  postgresqlUsername: postgres
+  postgresqlPassword: ${postgres_password}
+  postgresqlDatabase: sentry
+  replication:
+    enabled: false
