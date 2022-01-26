@@ -21,8 +21,8 @@ resource "helm_release" "sentry" {
         public_subnet_ids_str   = "${join(",", var.public_subnet_ids)}",
         tags                    = "environment=${var.env}"
 
-        postgres_db_host  = "${module.sentry_rds_pg.this_rds_cluster_endpoint}",
-        postgres_db_name  = "${local.db_name}",
+        # postgres_db_host  = "${module.sentry_rds_pg.this_rds_cluster_endpoint}",
+        # postgres_db_name  = "${local.db_name}",
         postgres_username = "${local.db_user}",
         postgres_password = "${local.db_pass}",
       }
