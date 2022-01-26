@@ -11,10 +11,6 @@ nginx:
 rabbitmq:
   enabled: false
 
-postgresql:
-  postgresqlUsername: postgres
-  postgresqlPassword: ${postgres_password}
-
 sentry:
   web:
     service:
