@@ -9,7 +9,7 @@ module "eks" {
   cluster_endpoint_public_access_cidrs = var.allowed_cidr_blocks
 
   vpc_id      = var.vpc_id
-  subnet_ids  = var.private_subnet_ids
+  subnet_ids  = concat(var.private_subnet_ids, var.public_subnet_ids)
   enable_irsa = true
 
   cluster_enabled_log_types = [
@@ -59,44 +59,45 @@ module "eks" {
       to_port     = 443
       type        = "ingress"
     }
+
+    egress_nodes_ephemeral_ports_tcp = {
+      description                = "To node 1025-65535"
+      protocol                   = "tcp"
+      from_port                  = 1025
+      to_port                    = 65535
+      type                       = "egress"
+      source_node_security_group = true
+    }
   }
 
   node_security_group_additional_rules = {
-    # ingress_cluster_9443 = {
-    #   description                   = "Cluster API to node groups webhook"
-    #   protocol                      = "tcp"
-    #   from_port                     = 9443
-    #   to_port                       = 9443
-    #   type                          = "ingress"
-    #   source_cluster_security_group = true
-    # }
+    ingress_from_cluster_port_9443 = {
+      description                   = "control-plane to data-plane ingress 9443"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      type                          = "ingress"
+      source_cluster_security_group = true
+    }
 
-    ingress_cluster_all_ports = {
-      description = "Internal communcation 80"
-      protocol    = "tcp"
+    ingress_self_all = {
+      description = "Node to node all ports/protocols"
+      protocol    = "-1"
       from_port   = 0
       to_port     = 0
       type        = "ingress"
       self        = true
     }
 
-    engress_cluster_all_ports = {
-      description = "Internal communcation 80"
-      protocol    = "tcp"
-      from_port   = 0
-      to_port     = 0
-      type        = "egress"
-      self        = true
+    egress_all = {
+      description      = "Node all egress"
+      protocol         = "-1"
+      from_port        = 0
+      to_port          = 0
+      type             = "egress"
+      cidr_blocks      = ["0.0.0.0/0"]
+      ipv6_cidr_blocks = ["::/0"]
     }
-
-    # engress_cluster_5432 = {
-    #   description = "Internal communcation to postgres"
-    #   protocol    = "tcp"
-    #   from_port   = 5432
-    #   to_port     = 5432
-    #   type        = "egress"
-    #   self        = true
-    # }
   }
 
   cluster_timeouts = {
