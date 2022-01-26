@@ -1,0 +1,37 @@
+prefix: ${module_prefix}
+
+user:
+  create: true
+  email: ${sentry_email}
+  password: ${sentry_password}
+
+nginx:
+  enabled: false
+
+rabbitmq:
+  enabled: false
+
+sentry:
+  web:
+    service:
+      annotations:
+        alb.ingress.kubernetes.io/healthcheck-path: /_health/
+        alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+
+relay:
+  service:
+    annotations:
+      alb.ingress.kubernetes.io/healthcheck-path: /api/relay/healthcheck/ready/
+      alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+
+ingress:
+  enabled: false
+
+postgresql:
+  enabled: true
+  nameOverride: sentry-postgresql
+  postgresqlUsername: postgres
+  postgresqlPassword: ${postgres_password}
+  postgresqlDatabase: sentry
+  replication:
+    enabled: false
