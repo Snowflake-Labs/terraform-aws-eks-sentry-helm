@@ -43,7 +43,7 @@ ingress:
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/tags: ${tags}
     alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
-    alb.ingress.kubernetes.io/subnets: ${private_subnet_ids_str}
+    alb.ingress.kubernetes.io/subnets: ${public_subnet_ids_str}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
     alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
