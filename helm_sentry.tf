@@ -1,6 +1,7 @@
 data "kubernetes_service" "lb_controller_webhook_service" {
   metadata {
-    name = "aws-load-balancer-webhook-service"
+    name      = "aws-load-balancer-webhook-service"
+    namespace = "kube-system"
   }
   depends_on = [helm_release.lb_controller]
 }
