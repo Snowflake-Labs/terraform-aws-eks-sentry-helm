@@ -45,10 +45,10 @@ resource "helm_release" "sentry" {
     )
   ]
 
-  depends_on = [
-    data.kubernetes_service.external_dns_service,
-    data.kubernetes_service.lb_controller_webhook_service,
-  ]
+  # depends_on = [
+  #   data.kubernetes_service.external_dns_service,
+  #   data.kubernetes_service.lb_controller_webhook_service,
+  # ]
 }
 
 
