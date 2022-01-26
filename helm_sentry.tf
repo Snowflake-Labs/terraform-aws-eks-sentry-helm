@@ -1,3 +1,10 @@
+data "kubernetes_service" "lb_controller_webhook_service" {
+  metadata {
+    name = "aws-load-balancer-webhook-service"
+  }
+  depends_on = [helm_release.lb_controller]
+}
+
 resource "helm_release" "sentry" {
   name  = "sentry"
   chart = "${path.module}/helm_sentry/"
@@ -30,8 +37,8 @@ resource "helm_release" "sentry" {
   ]
 
   depends_on = [
-    helm_release.lb_controller,
     helm_release.external_dns,
+    data.kubernetes_service.lb_controller_webhook_service,
   ]
 }
 
