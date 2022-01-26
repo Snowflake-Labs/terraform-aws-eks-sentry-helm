@@ -13,12 +13,6 @@ data "kubernetes_service" "sentry_relay" {
   depends_on = [helm_release.sentry]
 }
 
-locals {
-  shared_annotations = {
-
-  }
-}
-
 resource "kubernetes_ingress" "sentry_ingress" {
   metadata {
     name      = "sentry"
