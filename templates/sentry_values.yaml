@@ -12,7 +12,7 @@ rabbitmq:
   enabled: false
 
 postgresql:
-  postgresqlUsername: ${postgres_username}
+  postgresqlUsername: postgres
   postgresqlPassword: ${postgres_password}
 
 sentry:
