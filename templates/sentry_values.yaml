@@ -46,5 +46,5 @@ ingress:
     alb.ingress.kubernetes.io/subnets: ${private_subnet_ids_str}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: var.subdomain_cert_arn
+    alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
     external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
