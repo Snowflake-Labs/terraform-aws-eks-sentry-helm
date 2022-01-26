@@ -1,18 +1,18 @@
-data "kubernetes_service" "lb_controller_webhook_service" {
-  metadata {
-    name      = "aws-load-balancer-webhook-service"
-    namespace = "kube-system"
-  }
-  depends_on = [helm_release.lb_controller]
-}
+# data "kubernetes_service" "lb_controller_webhook_service" {
+#   metadata {
+#     name      = "aws-load-balancer-webhook-service"
+#     namespace = "kube-system"
+#   }
+#   depends_on = [helm_release.lb_controller]
+# }
 
-data "kubernetes_service" "external_dns_service" {
-  metadata {
-    name      = "external-dns"
-    namespace = "kube-system"
-  }
-  depends_on = [helm_release.external_dns]
-}
+# data "kubernetes_service" "external_dns_service" {
+#   metadata {
+#     name      = "external-dns"
+#     namespace = "kube-system"
+#   }
+#   depends_on = [helm_release.external_dns]
+# }
 
 resource "helm_release" "sentry" {
   name  = "sentry"
