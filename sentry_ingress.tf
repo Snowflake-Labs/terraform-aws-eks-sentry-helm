@@ -34,7 +34,7 @@ resource "kubernetes_ingress" "sentry_ingress" {
       "alb.ingress.kubernetes.io/scheme"          = "internet-facing"
       "alb.ingress.kubernetes.io/target-type"     = "ip"
       "alb.ingress.kubernetes.io/tags"            = "environment=${var.env}"
-      "alb.ingress.kubernetes.io/listen-ports"    = jsonencode([{ HTTP = 80 }]) #, HTTPS = 443
+      "alb.ingress.kubernetes.io/listen-ports"    = jsonencode([{ HTTP = 443 }])
       "alb.ingress.kubernetes.io/inbound-cidrs"   = "${join(",", var.allowed_cidr_blocks)}"
       "alb.ingress.kubernetes.io/subnets"         = "${join(",", var.public_subnet_ids)}"
       "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
