@@ -2,8 +2,8 @@ prefix: ${module_prefix}
 
 user:
   create: true
-  email: ${sentry_email}
-  password: ${sentry_password}
+  email: ${sentry_root_user_email}
+  password: ${sentry_root_user_password}
 
 nginx:
   enabled: false

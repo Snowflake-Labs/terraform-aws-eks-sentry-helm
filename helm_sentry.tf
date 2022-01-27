@@ -13,9 +13,9 @@ resource "helm_release" "sentry" {
     templatefile(
       "${path.module}/templates/sentry_values.yaml",
       {
-        module_prefix   = "${var.module_prefix}",
-        sentry_email    = "${var.sentry_email}",
-        sentry_password = "${var.sentry_password}",
+        module_prefix             = "${var.module_prefix}",
+        sentry_root_user_email    = "${var.sentry_root_user_email}",
+        sentry_root_user_password = "${var.sentry_root_user_password}",
 
         sentry_dns_name         = "${local.sentry_dns_name}",
         subdomain_cert_arn      = "${var.subdomain_cert_arn}",

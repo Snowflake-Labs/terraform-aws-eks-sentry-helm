@@ -14,13 +14,13 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "sentry_email" {
-  description = "The email used for logging in."
+variable "sentry_root_user_email" {
+  description = "The email used to login for the first time."
   type        = string
 }
 
-variable "sentry_password" {
-  description = "The login password."
+variable "sentry_root_user_password" {
+  description = "The ARN for the password login password used to login for the first time."
   type        = string
 }
 
