@@ -28,13 +28,13 @@ module "sentry_rds_pg" {
 }
 
 resource "aws_db_parameter_group" "aurora_db_postgres11_parameter_group" {
-  name        = "aurora-${local.sentry_prefix}-db-postgres11-parameter-group"
+  name        = "aurora-${var.module_prefix}-sentry-db-postgres11-parameter-group"
   family      = "aurora-postgresql11"
   description = "aurora-db-postgres11-parameter-group"
 }
 
 resource "aws_rds_cluster_parameter_group" "aurora_cluster_postgres11_parameter_group" {
-  name        = "aurora-${local.sentry_prefix}-postgres11-cluster-parameter-group"
+  name        = "aurora-${var.module_prefix}-sentry-postgres11-cluster-parameter-group"
   family      = "aurora-postgresql11"
   description = "aurora-postgres11-cluster-parameter-group"
 }
