@@ -17,4 +17,9 @@ module "sentry_kafka" {
   zone_id               = var.private_hosted_zone_id
   subnet_ids            = var.private_subnet_ids
   create_security_group = true
+
+  allowed_security_group_ids = [
+    module.eks.node_security_group_id,
+    module.eks.cluster_security_group_id,
+  ]
 }
