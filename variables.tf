@@ -1,9 +1,4 @@
 # Required Variables
-variable "eks_cluster_name" {
-  description = "The name of the EKS cluster to create for sentry."
-  type        = string
-}
-
 variable "kubernetes_version" {
   description = "The version of the EKS cluster to create for sentry."
   type        = string
