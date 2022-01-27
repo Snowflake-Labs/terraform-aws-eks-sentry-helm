@@ -4,9 +4,9 @@ module "sentry_rds_pg" {
   version = "~> 2.0"
 
   name           = "${var.module_prefix}-pg11-db"
-  database_name  = local.db_name
-  username       = local.db_user
-  password       = local.db_pass
+  database_name  = var.db_name
+  username       = var.db_user
+  password       = var.db_pass
   engine         = "aurora-postgresql"
   engine_version = "11.9"
 
