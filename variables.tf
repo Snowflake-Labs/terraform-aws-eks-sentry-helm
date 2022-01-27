@@ -57,6 +57,9 @@ variable "smtp_username" {
 variable "smtp_password" {
   type = string
 }
+variable "module_prefix" {
+  type = string
+}
 
 variable "bastion_security_group_id" {
   description = "Security Group of the bastion host in the public subnet."
