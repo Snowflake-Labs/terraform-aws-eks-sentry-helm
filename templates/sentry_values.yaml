@@ -28,10 +28,11 @@ ingress:
   enabled: false
 
 postgresql:
-  enabled: true
-  nameOverride: sentry-postgresql
-  postgresqlUsername: postgres
-  postgresqlPassword: ${postgres_password}
-  postgresqlDatabase: sentry
-  replication:
-    enabled: false
+  enabled: false
+
+externalPostgresql:
+  host: ${postgres_db_host}
+  port: 5432
+  database: ${postgres_db_name}
+  username: ${postgres_username}
+  password: ${postgres_password}
