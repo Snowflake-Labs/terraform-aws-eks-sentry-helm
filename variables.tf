@@ -24,7 +24,7 @@ variable "hosted_zone_subdomain" {
   type        = string
 }
 
-variable "hosted_zone_id" {
+variable "private_hosted_zone_id" {
   description = "ID of the route53 hosted zone."
   type        = string
 }
@@ -140,5 +140,10 @@ variable "number_of_broker_nodes" {
 }
 
 locals {
-  sentry_dns_name = var.env != "prod" ? "sentry-${var.module_prefix}.${var.hosted_zone_subdomain}" : "sentry.${var.hosted_zone_subdomain}"
+  sentry_prefix    = "${var.module_prefix}-sentry"
+  eks_cluster_name = "${var.module_prefix}-sentry-cluster"
+}
+
+locals {
+  sentry_dns_name = var.env != "prod" ? "${local.sentry_prefix}.${var.hosted_zone_subdomain}" : "sentry.${var.hosted_zone_subdomain}"
 }

@@ -1,8 +1,3 @@
-locals {
-  sentry_prefix    = "${var.module_prefix}_sentry"
-  eks_cluster_name = "${var.module_prefix}-sentry-cluster"
-}
-
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "18.2.1"

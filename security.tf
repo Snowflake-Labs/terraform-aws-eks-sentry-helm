@@ -65,3 +65,12 @@ resource "aws_security_group_rule" "sentry_kafka_allow_from_eks_node" {
   source_security_group_id = module.eks.node_security_group_id
   security_group_id        = module.sentry_kafka.security_group_id
 }
+
+resource "aws_security_group_rule" "sentry_kafka_allow_from_eks_cluster" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  source_security_group_id = module.eks.node_security_group_id
+  security_group_id        = module.sentry_kafka.security_group_id
+}

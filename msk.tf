@@ -14,7 +14,7 @@ module "sentry_kafka" {
   cloudwatch_logs_log_group = aws_cloudwatch_log_group.sentry_msk.name
 
   vpc_id                = var.vpc_id
-  zone_id               = var.hosted_zone_id
+  zone_id               = var.private_hosted_zone_id
   subnet_ids            = var.private_subnet_ids
   create_security_group = true
 }
