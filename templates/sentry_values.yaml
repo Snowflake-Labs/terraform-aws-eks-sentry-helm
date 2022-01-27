@@ -36,3 +36,12 @@ externalPostgresql:
   database: ${postgres_db_name}
   username: ${postgres_username}
   password: ${postgres_password}
+
+mail:
+  backend: smtp
+  useTls: true
+  from: sentry@snowflake.com
+  host: ${smtp_host}
+  port: 587
+  username: ${smtp_username}
+  password: ${smtp_password}

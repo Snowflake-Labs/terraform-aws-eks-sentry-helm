@@ -34,23 +34,34 @@ variable "subdomain_cert_arn" {
   type        = string
 }
 
-variable "db_secrets_arn" {
+variable "db_name" {
   type = string
+}
 
-  validation {
-    condition = can(regex(
-      "^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$",
-      var.db_secrets_arn
-    ))
-    error_message = "The secrets arn doesn't match the regex ^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$."
-  }
+variable "db_user" {
+  type = string
+}
+
+variable "db_pass" {
+  type = string
+}
+
+variable "smtp_host" {
+  type = string
+}
+
+variable "smtp_username" {
+  type = string
+}
+
+variable "smtp_password" {
+  type = string
 }
 
 variable "bastion_security_group_id" {
   description = "Security Group of the bastion host in the public subnet."
   type        = string
 }
-
 
 # Optional Variables
 variable "sentry_namespace" {
