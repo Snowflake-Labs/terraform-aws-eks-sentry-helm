@@ -24,7 +24,7 @@
 
 # Sentry DB Security Group
 resource "aws_security_group" "sentry_rds_pg" {
-  name        = "sentry-rds-pg"
+  name        = "${local.sentry_prefix}-rds-pg"
   description = "Database security group for the Sentry application."
   vpc_id      = var.vpc_id
 }
