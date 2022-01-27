@@ -3,7 +3,7 @@ module "sentry_rds_pg" {
   source  = "terraform-aws-modules/rds-aurora/aws"
   version = "~> 2.0"
 
-  name           = "${local.sentry_prefix}-pg11-db"
+  name           = "${var.module_prefix}-sentry-pg11-db"
   database_name  = var.db_name
   username       = var.db_user
   password       = var.db_pass
