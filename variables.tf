@@ -29,6 +29,11 @@ variable "hosted_zone_subdomain" {
   type        = string
 }
 
+variable "hosted_zone_id" {
+  description = "ID of the route53 hosted zone."
+  type        = string
+}
+
 variable "subdomain_cert_arn" {
   description = "ACM Cert ARN of the wildcart cert for the hosted zone domain name."
   type        = string
@@ -100,29 +105,6 @@ variable "public_subnet_ids" {
   default     = []
 }
 
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "map_accounts" {
-  description = "Additional AWS account numbers to add to the aws-auth configmap."
-  type        = list(string)
-  default     = []
-}
-
-variable "module_prefix" {
-  description = "?"
-  type        = string
-  default     = ""
-}
-
 variable "external_dns_zone_type" {
   description = "External-dns Helm chart AWS DNS zone type (public, private or empty for both)"
   type        = string
@@ -138,11 +120,27 @@ variable "az_count" {
 variable "arn_format" {
   type        = string
   default     = "aws"
-  description = "ARNs identifier, usefull for GovCloud begin with `aws-us-gov-<region>`."
+  description = "ARNs identifier, useful for GovCloud begin with `aws-us-gov-<region>`."
+}
+
+variable "kafka_version" {
+  type        = string
+  description = "Version of the kafka service."
+  default     = "2.4.1.1"
+}
+
+variable "broker_instance_type" {
+  type        = string
+  description = "Broker instance type."
+  default     = "kafka.m5.large"
+}
+
+variable "number_of_broker_nodes" {
+  type        = string
+  description = "Number of broker instance nodes. NOTE: This has to be a multiple of the # of subnet_ids."
+  default     = 2
 }
 
 locals {
-  sentry_dns_name = "sentry-test.${var.hosted_zone_subdomain}"
+  sentry_dns_name = var.env != "prod" ? "sentry-${var.module_prefix}.${var.hosted_zone_subdomain}" : "sentry.${var.hosted_zone_subdomain}"
 }
-
-

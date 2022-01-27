@@ -31,6 +31,11 @@ resource "helm_release" "sentry" {
         smtp_host         = "${var.smtp_host}",
         smtp_username     = "${var.smtp_username}",
         smtp_password     = "${var.smtp_password}",
+
+        kafka_host_0 = "${module.sentry_kafka.all_brokers.0}",
+        kafka_host_1 = "${module.sentry_kafka.all_brokers.1}",
+        kafka_host_2 = "${module.sentry_kafka.all_brokers.2}",
+        kafka_host_3 = "${module.sentry_kafka.all_brokers.3}",
       }
     )
   ]
