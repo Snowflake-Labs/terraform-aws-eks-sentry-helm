@@ -131,7 +131,7 @@ variable "arn_format" {
 }
 
 locals {
-  sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
+  sentry_dns_name = "sentry-test.${var.hosted_zone_subdomain}"
 }
 
 
