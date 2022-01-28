@@ -45,12 +45,16 @@ mail:
   port: 587
   username: ${smtp_username}
   password: ${smtp_password}
-# externalKafka:
-#   host: ${kafka_host_0}
-#   port: 9092
-#   host: ${kafka_host_1}
-#   port: 9092
-#   host: ${kafka_host_2}
-#   port: 9092
-#   host: ${kafka_host_3}
-#   port: 9092
+
+kafka:
+  enabled: false
+
+externalKafka:
+  host: ${kafka_host_0}
+  port: 9098
+  host: ${kafka_host_1}
+  port: 9098
+  host: ${kafka_host_2}
+  port: 9098
+  host: ${kafka_host_3}
+  port: 9098
