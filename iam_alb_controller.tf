@@ -1,8 +1,8 @@
 # 1. sentry-alb-ingress LB Controller Policy Document
 data "aws_iam_policy_document" "lb_controller_policy_doc" {
   statement {
-    effect = "Allow"
-    actions = ["iam:CreateServiceLinkedRole"]
+    effect    = "Allow"
+    actions   = ["iam:CreateServiceLinkedRole"]
     resources = ["*"]
 
     condition {
@@ -77,26 +77,26 @@ data "aws_iam_policy_document" "lb_controller_policy_doc" {
   }
 
   statement {
-    effect = "Allow"
-    actions = ["ec2:CreateSecurityGroup"]
+    effect    = "Allow"
+    actions   = ["ec2:CreateSecurityGroup"]
     resources = ["*"]
   }
 
   statement {
-    effect = "Allow"
-    actions = ["ec2:CreateTags"]
+    effect    = "Allow"
+    actions   = ["ec2:CreateTags"]
     resources = ["arn:${var.arn_format}:ec2:*:*:security-group/*"]
 
     condition {
       test     = "StringEquals"
       variable = "ec2:CreateAction"
-      values = ["CreateSecurityGroup"]
+      values   = ["CreateSecurityGroup"]
     }
 
     condition {
       test     = "Null"
       variable = "aws:RequestTag/elbv2.k8s.aws/cluster"
-      values = ["false"]
+      values   = ["false"]
     }
   }
 
@@ -278,9 +278,9 @@ data "aws_iam_policy_document" "lb_controller_policy_doc" {
 
 # 2.sentry-alb-ingress Controller Policy
 resource "aws_iam_policy" "lb_controller_policy" {
-  name        = "sentry-alb-ingress" #  "${var.cluster_name}-alb-ingress"
+  name        = "${local.sentry_prefix}-alb-ingress" #  "${var.cluster_name}-alb-ingress"
   path        = "/"
-  description = "Policy for alb-ingress service"
+  description = "Policy for alb-ingress service."
 
   policy = data.aws_iam_policy_document.lb_controller_policy_doc.json
 }
@@ -289,7 +289,7 @@ resource "aws_iam_policy" "lb_controller_policy" {
 data "aws_iam_policy_document" "lb_controller_irsa_assume_role_policy_doc" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
-    effect = "Allow"
+    effect  = "Allow"
 
     principals {
       type        = "Federated"
@@ -299,14 +299,14 @@ data "aws_iam_policy_document" "lb_controller_irsa_assume_role_policy_doc" {
     condition {
       test     = "StringEquals"
       variable = "${local.oidc_url}:sub"
-      values = ["system:serviceaccount:kube-system:aws-alb-ingress-controller"]
+      values   = ["system:serviceaccount:kube-system:aws-alb-ingress-controller"]
     }
   }
 }
 
 # 4. sentry-alb-ingress IAM Role
 resource "aws_iam_role" "lb_controller_role" {
-  name               = "sentry-alb-ingress" #  "${var.cluster_name}-alb-ingress"
+  name               = "${local.sentry_prefix}-alb-ingress" #  "${var.cluster_name}-alb-ingress"
   assume_role_policy = data.aws_iam_policy_document.lb_controller_irsa_assume_role_policy_doc.json
 }
 
