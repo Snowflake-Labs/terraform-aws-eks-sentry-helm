@@ -33,12 +33,12 @@ output "eks_managed_node_groups" {
   value       = module.eks.eks_managed_node_groups
 }
 
-output "kafka_brokers" {
-  description = "Kafka broker nodes hostnames and ports."
-  value       = module.sentry_kafka.all_brokers
-}
+# output "kafka_brokers" {
+#   description = "Kafka broker nodes hostnames and ports."
+#   value       = module.sentry_kafka.all_brokers
+# }
 
-output "kafka_bootstrap_brokers" {
-  description = "Kafka broker nodes hostnames and ports."
-  value       = module.sentry_kafka.bootstrap_brokers
-}
+# output "kafka_bootstrap_brokers" {
+#   description = "Kafka broker nodes hostnames and ports."
+#   value       = module.sentry_kafka.bootstrap_brokers
+# }
