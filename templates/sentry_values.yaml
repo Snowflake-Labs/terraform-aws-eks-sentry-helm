@@ -51,10 +51,10 @@ kafka:
 
 externalKafka:
   host: ${kafka_host_0}
-  port: 9098
+  port: 9094
   host: ${kafka_host_1}
-  port: 9098
+  port: 9094
   host: ${kafka_host_2}
-  port: 9098
+  port: 9094
   host: ${kafka_host_3}
-  port: 9098
+  port: 9094
