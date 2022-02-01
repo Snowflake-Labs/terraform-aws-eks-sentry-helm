@@ -67,11 +67,6 @@ variable "bastion_security_group_id" {
 }
 
 # Optional Variables
-variable "kubernetes_version" {
-  description = "The version of the EKS cluster to create for sentry."
-  type        = string
-}
-
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
   type        = string
