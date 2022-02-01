@@ -67,6 +67,12 @@ variable "bastion_security_group_id" {
 }
 
 # Optional Variables
+variable "app_name" {
+  description = "Name of the app."
+  type        = string
+  default     = "sentry"
+}
+
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
   type        = string
