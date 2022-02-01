@@ -66,6 +66,14 @@ variable "bastion_security_group_id" {
   type        = string
 }
 
+variable "node_security_group_id" {
+  type = string
+}
+
+variable "cluster_security_group_id" {
+  type = string
+}
+
 # Optional Variables
 variable "app_name" {
   description = "Name of the app."
