@@ -139,11 +139,17 @@ variable "number_of_broker_nodes" {
   default     = 2
 }
 
+variable "domain_name_suffix" {
+  description = "Prefix for domain name."
+  type        = string
+  default     = null
+}
+
 locals {
   sentry_prefix    = "${var.module_prefix}-sentry"
   eks_cluster_name = "${var.module_prefix}-sentry-cluster"
 }
 
 locals {
-  sentry_dns_name = var.env != "prod" ? "${local.sentry_prefix}.${var.hosted_zone_subdomain}" : "sentry.${var.hosted_zone_subdomain}"
+  sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
 }
