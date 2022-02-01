@@ -34,9 +34,4 @@ resource "helm_release" "sentry" {
       }
     )
   ]
-
-  depends_on = [
-    helm_release.lb_controller,
-    helm_release.external_dns,
-  ]
 }
