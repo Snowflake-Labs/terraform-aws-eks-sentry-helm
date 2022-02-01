@@ -67,6 +67,11 @@ variable "bastion_security_group_id" {
 }
 
 # Optional Variables
+variable "kubernetes_version" {
+  description = "The version of the EKS cluster to create for sentry."
+  type        = string
+}
+
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
   type        = string
@@ -115,12 +120,6 @@ variable "az_count" {
   default     = 1
 }
 
-variable "arn_format" {
-  type        = string
-  default     = "aws"
-  description = "ARNs identifier, useful for GovCloud begin with `aws-us-gov-<region>`."
-}
-
 variable "kafka_version" {
   type        = string
   description = "Version of the kafka service."
@@ -146,8 +145,7 @@ variable "domain_name_suffix" {
 }
 
 locals {
-  sentry_prefix    = "${var.module_prefix}-sentry"
-  eks_cluster_name = "${var.module_prefix}-sentry-cluster"
+  sentry_prefix = "${var.module_prefix}-${var.app_name}"
 }
 
 locals {
