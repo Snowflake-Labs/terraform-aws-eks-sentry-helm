@@ -49,5 +49,5 @@ mail:
 
 system:
   url: "https://${dns_name}"
-  adminEmail: "${admin_email}"
+  adminEmail: "${sentry_root_user_email}"
   public: false
