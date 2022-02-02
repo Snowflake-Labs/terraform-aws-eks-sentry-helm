@@ -1,9 +1,4 @@
 # Required Variables
-variable "eks_cluster_name" {
-  description = "The name of the EKS cluster to create for sentry."
-  type        = string
-}
-
 variable "kubernetes_version" {
   description = "The version of the EKS cluster to create for sentry."
   type        = string
@@ -14,13 +9,13 @@ variable "vpc_id" {
   type        = string
 }
 
-variable "sentry_email" {
-  description = "The email used for logging in."
+variable "sentry_root_user_email" {
+  description = "The email used to login for the first time."
   type        = string
 }
 
-variable "sentry_password" {
-  description = "The login password."
+variable "sentry_root_user_password" {
+  description = "The ARN for the password login password used to login for the first time."
   type        = string
 }
 
@@ -29,21 +24,41 @@ variable "hosted_zone_subdomain" {
   type        = string
 }
 
+variable "private_hosted_zone_id" {
+  description = "ID of the route53 hosted zone."
+  type        = string
+}
+
 variable "subdomain_cert_arn" {
   description = "ACM Cert ARN of the wildcart cert for the hosted zone domain name."
   type        = string
 }
 
-variable "db_secrets_arn" {
+variable "db_name" {
   type = string
+}
 
-  validation {
-    condition = can(regex(
-      "^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$",
-      var.db_secrets_arn
-    ))
-    error_message = "The secrets arn doesn't match the regex ^arn:aws:secretsmanager:us-west-2:\\d{12}:secret:(dev|prod)/sentry/db-secrets-[a-zA-Z0-9/_+=.@-]+$."
-  }
+variable "db_user" {
+  type = string
+}
+
+variable "db_pass" {
+  type = string
+}
+
+variable "smtp_host" {
+  type = string
+}
+
+variable "smtp_username" {
+  type = string
+}
+
+variable "smtp_password" {
+  type = string
+}
+variable "module_prefix" {
+  type = string
 }
 
 variable "bastion_security_group_id" {
@@ -51,8 +66,21 @@ variable "bastion_security_group_id" {
   type        = string
 }
 
+variable "node_security_group_id" {
+  type = string
+}
+
+variable "cluster_security_group_id" {
+  type = string
+}
 
 # Optional Variables
+variable "app_name" {
+  description = "Name of the app."
+  type        = string
+  default     = "sentry"
+}
+
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
   type        = string
@@ -89,29 +117,6 @@ variable "public_subnet_ids" {
   default     = []
 }
 
-variable "map_users" {
-  description = "Additional IAM users to add to the aws-auth configmap."
-  type = list(object({
-    userarn  = string
-    username = string
-    groups   = list(string)
-  }))
-
-  default = []
-}
-
-variable "map_accounts" {
-  description = "Additional AWS account numbers to add to the aws-auth configmap."
-  type        = list(string)
-  default     = []
-}
-
-variable "module_prefix" {
-  description = "?"
-  type        = string
-  default     = ""
-}
-
 variable "external_dns_zone_type" {
   description = "External-dns Helm chart AWS DNS zone type (public, private or empty for both)"
   type        = string
@@ -124,14 +129,34 @@ variable "az_count" {
   default     = 1
 }
 
-variable "arn_format" {
+variable "kafka_version" {
   type        = string
-  default     = "aws"
-  description = "ARNs identifier, usefull for GovCloud begin with `aws-us-gov-<region>`."
+  description = "Version of the kafka service."
+  default     = "2.4.1.1"
+}
+
+variable "broker_instance_type" {
+  type        = string
+  description = "Broker instance type."
+  default     = "kafka.m5.large"
+}
+
+variable "number_of_broker_nodes" {
+  type        = string
+  description = "Number of broker instance nodes. NOTE: This has to be a multiple of the # of subnet_ids."
+  default     = 2
+}
+
+variable "domain_name_suffix" {
+  description = "Prefix for domain name."
+  type        = string
+  default     = null
 }
 
 locals {
-  sentry_dns_name = "sentry.${var.hosted_zone_subdomain}"
+  sentry_prefix = "${var.module_prefix}-${var.app_name}"
 }
 
-
+locals {
+  sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
+}

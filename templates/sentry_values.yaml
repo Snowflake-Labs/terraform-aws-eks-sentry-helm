@@ -2,8 +2,8 @@ prefix: ${module_prefix}
 
 user:
   create: true
-  email: ${sentry_email}
-  password: ${sentry_password}
+  email: ${sentry_root_user_email}
+  password: ${sentry_root_user_password}
 
 nginx:
   enabled: false
@@ -19,32 +19,35 @@ sentry:
         alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
 relay:
+  mode: proxy
   service:
     annotations:
       alb.ingress.kubernetes.io/healthcheck-path: /api/relay/healthcheck/ready/
       alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
-postgresql:
-  enabled: true
-  nameOverride: sentry-postgresql
-  postgresqlUsername: postgres
-  postgresqlPassword: ${postgres_password}
-  postgresqlDatabase: sentry
-  replication:
-    enabled: false
-
 ingress:
-  enabled: true
-  hostname: ${sentry_dns_name}
-  regexPathStyle: aws-alb
-  annotations:
-    kubernetes.io/ingress.class: alb
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/tags: ${tags}
-    alb.ingress.kubernetes.io/inbound-cidrs: ${allowed_cidr_blocks_str}
-    alb.ingress.kubernetes.io/subnets: ${public_subnet_ids_str}
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/ssl-redirect: "443"
-    alb.ingress.kubernetes.io/certificate-arn: ${subdomain_cert_arn}
-    external-dns.alpha.kubernetes.io/hostname: ${sentry_dns_name}
+  enabled: false
+
+postgresql:
+  enabled: false
+
+externalPostgresql:
+  host: ${postgres_db_host}
+  port: 5432
+  database: ${postgres_db_name}
+  username: ${postgres_username}
+  password: ${postgres_password}
+
+mail:
+  backend: smtp
+  useTls: true
+  from: sentry@snowflake.com
+  host: ${smtp_host}
+  port: 587
+  username: ${smtp_username}
+  password: ${smtp_password}
+
+system:
+  url: "https://${dns_name}"
+  adminEmail: "${sentry_root_user_email}"
+  public: false
