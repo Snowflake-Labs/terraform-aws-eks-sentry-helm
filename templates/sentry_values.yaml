@@ -19,6 +19,7 @@ sentry:
         alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
 relay:
+  mode: proxy
   service:
     annotations:
       alb.ingress.kubernetes.io/healthcheck-path: /api/relay/healthcheck/ready/
@@ -45,3 +46,8 @@ mail:
   port: 587
   username: ${smtp_username}
   password: ${smtp_password}
+
+system:
+  url: "https://${dns_name}"
+  adminEmail: "${sentry_root_user_email}"
+  public: false

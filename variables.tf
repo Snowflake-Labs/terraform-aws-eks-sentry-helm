@@ -66,7 +66,21 @@ variable "bastion_security_group_id" {
   type        = string
 }
 
+variable "node_security_group_id" {
+  type = string
+}
+
+variable "cluster_security_group_id" {
+  type = string
+}
+
 # Optional Variables
+variable "app_name" {
+  description = "Name of the app."
+  type        = string
+  default     = "sentry"
+}
+
 variable "sentry_namespace" {
   description = "Kuberentes namespace to deploy Sentry application"
   type        = string
@@ -115,12 +129,6 @@ variable "az_count" {
   default     = 1
 }
 
-variable "arn_format" {
-  type        = string
-  default     = "aws"
-  description = "ARNs identifier, useful for GovCloud begin with `aws-us-gov-<region>`."
-}
-
 variable "kafka_version" {
   type        = string
   description = "Version of the kafka service."
@@ -139,11 +147,16 @@ variable "number_of_broker_nodes" {
   default     = 2
 }
 
-locals {
-  sentry_prefix    = "${var.module_prefix}-sentry"
-  eks_cluster_name = "${var.module_prefix}-sentry-cluster"
+variable "domain_name_suffix" {
+  description = "Prefix for domain name."
+  type        = string
+  default     = null
 }
 
 locals {
-  sentry_dns_name = var.env != "prod" ? "${local.sentry_prefix}.${var.hosted_zone_subdomain}" : "sentry.${var.hosted_zone_subdomain}"
+  sentry_prefix = "${var.module_prefix}-${var.app_name}"
+}
+
+locals {
+  sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
 }
