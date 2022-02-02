@@ -74,6 +74,11 @@ variable "cluster_security_group_id" {
   type = string
 }
 
+variable "admin_email" {
+  description = "Admin email address."
+  type        = string
+}
+
 # Optional Variables
 variable "app_name" {
   description = "Name of the app."

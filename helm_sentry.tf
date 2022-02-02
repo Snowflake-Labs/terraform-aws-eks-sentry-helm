@@ -31,6 +31,7 @@ resource "helm_release" "sentry" {
         smtp_host         = "${var.smtp_host}",
         smtp_username     = "${var.smtp_username}",
         smtp_password     = "${var.smtp_password}",
+        dns_name          = "${local.sentry_dns_name}",
       }
     )
   ]

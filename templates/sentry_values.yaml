@@ -46,3 +46,8 @@ mail:
   port: 587
   username: ${smtp_username}
   password: ${smtp_password}
+
+system:
+  url: "https://${dns_name}"
+  adminEmail: "${admin_email}"
+  public: false
