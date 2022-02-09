@@ -25,6 +25,7 @@ resource "helm_release" "sentry" {
         tags                    = "environment=${var.env}"
 
         postgres_db_host  = "${var.db_host}",
+        postgres_db_port  = "${var.db_port}",
         postgres_db_name  = "${var.db_name}",
         postgres_username = "${var.db_user}",
         postgres_password = "${var.db_pass}",
