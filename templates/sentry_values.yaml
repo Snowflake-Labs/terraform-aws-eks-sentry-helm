@@ -33,7 +33,7 @@ postgresql:
 
 externalPostgresql:
   host: ${postgres_db_host}
-  port: 5432
+  port: ${postgres_db_port}
   database: ${postgres_db_name}
   username: ${postgres_username}
   password: ${postgres_password}

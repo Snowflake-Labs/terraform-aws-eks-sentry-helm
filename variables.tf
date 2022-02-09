@@ -34,6 +34,14 @@ variable "subdomain_cert_arn" {
   type        = string
 }
 
+variable "db_host" {
+  type = string
+}
+
+variable "db_port" {
+  type = string
+}
+
 variable "db_name" {
   type = string
 }
@@ -64,14 +72,6 @@ variable "module_prefix" {
 variable "bastion_security_group_id" {
   description = "Security Group of the bastion host in the public subnet."
   type        = string
-}
-
-variable "node_security_group_id" {
-  type = string
-}
-
-variable "cluster_security_group_id" {
-  type = string
 }
 
 # Optional Variables
