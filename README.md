@@ -8,6 +8,8 @@ Okta SSO SAML setup instructions can be found [here](https://docs.sentry.io/prod
 
 
 ## Slack Integration
-
+Slack integration steps can be found [here](https://docs.sentry.io/product/integrations/notification-incidents/slack/).
 
 ## JIRA Integration
+
+JIRA integration steps can be found [here](https://docs.sentry.io/product/integrations/project-mgmt/jira/#jira-server).
