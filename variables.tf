@@ -74,6 +74,18 @@ variable "bastion_security_group_id" {
   type        = string
 }
 
+variable "sentry_slack_client_id" {
+  type = string
+}
+
+variable "sentry_slack_client_secret" {
+  type = string
+}
+
+variable "sentry_slack_signing_secret" {
+  type = string
+}
+
 # Optional Variables
 variable "app_name" {
   description = "Name of the app."

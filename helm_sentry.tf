@@ -33,6 +33,10 @@ resource "helm_release" "sentry" {
         smtp_username     = "${var.smtp_username}",
         smtp_password     = "${var.smtp_password}",
         dns_name          = "${local.sentry_dns_name}",
+
+        sentry_slack_client_id      = "${var.sentry_slack_client_id}",
+        sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",
+        sentry_slack_signing_secret = "${var.sentry_slack_signing_secret}",
       }
     )
   ]

@@ -51,3 +51,8 @@ system:
   url: "https://${dns_name}"
   adminEmail: "${sentry_root_user_email}"
   public: false
+
+slack:
+  clientId: ${sentry_slack_client_id}
+  clientSecret: ${sentry_slack_client_secret}
+  signingSecret: ${sentry_slack_signing_secret}
