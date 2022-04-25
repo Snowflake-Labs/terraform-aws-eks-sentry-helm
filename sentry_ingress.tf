@@ -67,3 +67,58 @@ resource "kubernetes_ingress" "sentry_ingress" {
     }
   }
 }
+
+resource "kubernetes_ingress" "sentry_ingress_private" {
+  metadata {
+    name      = "sentry-private"
+    namespace = "default"
+
+    labels = {
+      app         = "sentry-private"
+      environment = var.env
+    }
+
+    annotations = {
+      "kubernetes.io/ingress.class"               = "alb"
+      "alb.ingress.kubernetes.io/scheme"          = "internal"
+      "alb.ingress.kubernetes.io/target-type"     = "ip"
+      "alb.ingress.kubernetes.io/tags"            = "environment=${var.env}"
+      "alb.ingress.kubernetes.io/listen-ports"    = jsonencode([{ HTTPS = 443 }])
+      "alb.ingress.kubernetes.io/security-groups" = "${var.sentry_private_ingress_sg.id}"
+      "alb.ingress.kubernetes.io/subnets"         = "${join(",", var.private_subnet_ids)}"
+      "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
+      "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
+      "external-dns.alpha.kubernetes.io/hostname" = local.sentry_dns_name
+    }
+  }
+
+  spec {
+    rule {
+      http {
+        path {
+          path = "/api/0/*"
+          backend {
+            service_name = data.kubernetes_service.sentry_web.metadata.0.name
+            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+          }
+        }
+
+        path {
+          path = "/api/*"
+          backend {
+            service_name = data.kubernetes_service.sentry_relay.metadata.0.name
+            service_port = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+          }
+        }
+
+        path {
+          path = "/*"
+          backend {
+            service_name = data.kubernetes_service.sentry_web.metadata.0.name
+            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+          }
+        }
+      }
+    }
+  }
+}

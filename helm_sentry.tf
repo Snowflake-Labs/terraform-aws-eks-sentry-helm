@@ -29,10 +29,11 @@ resource "helm_release" "sentry" {
         postgres_db_name  = "${var.db_name}",
         postgres_username = "${var.db_user}",
         postgres_password = "${var.db_pass}",
-        smtp_host         = "${var.smtp_host}",
-        smtp_username     = "${var.smtp_username}",
-        smtp_password     = "${var.smtp_password}",
-        dns_name          = "${local.sentry_dns_name}",
+
+        smtp_host     = "${var.smtp_host}",
+        smtp_username = "${var.smtp_username}",
+        smtp_password = "${var.smtp_password}",
+        dns_name      = "${local.sentry_dns_name}",
 
         sentry_slack_client_id      = "${var.sentry_slack_client_id}",
         sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",
