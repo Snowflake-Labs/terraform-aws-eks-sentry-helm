@@ -15,11 +15,11 @@ data "kubernetes_service" "sentry_relay" {
 
 resource "kubernetes_ingress" "sentry_ingress" {
   metadata {
-    name      = var.sentry_prefix
+    name      = local.sentry_prefix
     namespace = "default"
 
     labels = {
-      app         = var.sentry_prefix
+      app         = local.sentry_prefix
       environment = var.env
     }
 
@@ -70,11 +70,11 @@ resource "kubernetes_ingress" "sentry_ingress" {
 
 resource "kubernetes_ingress" "sentry_ingress_private" {
   metadata {
-    name      = "sentry-private"
+    name      = "${local.sentry_prefix}-private"
     namespace = "default"
 
     labels = {
-      app         = "sentry-private"
+      app         = "${local.sentry_prefix}-private"
       environment = var.env
     }
 
