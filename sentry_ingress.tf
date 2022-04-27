@@ -15,11 +15,11 @@ data "kubernetes_service" "sentry_relay" {
 
 resource "kubernetes_ingress" "sentry_ingress" {
   metadata {
-    name      = "sentry"
+    name      = var.sentry_prefix
     namespace = "default"
 
     labels = {
-      app         = "sentry"
+      app         = var.sentry_prefix
       environment = var.env
     }
 

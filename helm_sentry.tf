@@ -1,5 +1,5 @@
 resource "helm_release" "sentry" {
-  name  = "sentry"
+  name  = var.sentry_prefix
   chart = "${path.module}/helm_sentry/"
   # When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
   # Use remote helm uncomment line 40 and comment 43, 44 using repository and version and chart = "sentry"
