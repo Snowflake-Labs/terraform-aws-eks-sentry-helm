@@ -112,12 +112,11 @@ variable "allowed_cidr_blocks" {
   default     = []
 }
 
-variable "allowed_cidr_blocks" {
-  description = "Allowed CIDR blocks that can initiate connections to Sentry."
+variable "allowed_security_group_ids" {
+  description = "Allowed SG IDs that can initiate connections to Sentry."
   type        = list(string)
   default     = []
 }
-
 
 variable "private_subnet_ids" {
   description = "Private subnet IDs to add kubernetes cluster on."
