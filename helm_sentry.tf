@@ -1,10 +1,11 @@
+
+# chart = "${path.module}/helm_sentry/"
+# When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
 resource "helm_release" "sentry" {
-  name  = local.sentry_prefix
-  chart = "${path.module}/helm_sentry/"
-  # When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
-  # Use remote helm uncomment line 40 and comment 43, 44 using repository and version and chart = "sentry"
-  #   repository = "https://sentry-kubernetes.github.io/charts"
-  #   version    = "13.0.0"
+  name              = local.sentry_prefix
+  chart             = "sentry"
+  repository        = "https://sentry-kubernetes.github.io/charts"
+  version           = "14.0.2"
   timeout           = 600
   wait              = false
   dependency_update = true
