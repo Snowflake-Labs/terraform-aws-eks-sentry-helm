@@ -84,7 +84,7 @@ resource "kubernetes_ingress" "sentry_ingress_private" {
       "alb.ingress.kubernetes.io/target-type"     = "ip"
       "alb.ingress.kubernetes.io/tags"            = "environment=${var.env}"
       "alb.ingress.kubernetes.io/listen-ports"    = jsonencode([{ HTTPS = 443 }])
-      "alb.ingress.kubernetes.io/security-groups" = "${aws_security_group.sentry_private_ingress_sg.id}"
+      "alb.ingress.kubernetes.io/security-groups" = "${aws_security_group.sentry_private_ingress_sg.0.id}"
       "alb.ingress.kubernetes.io/subnets"         = "${join(",", var.private_subnet_ids)}"
       "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
       "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
