@@ -2,7 +2,7 @@
 # chart = "${path.module}/helm_sentry/"
 # When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
 resource "helm_release" "sentry" {
-  name              = local.sentry_prefix
+  name              = "sentry"
   chart             = "sentry"
   repository        = "https://sentry-kubernetes.github.io/charts"
   version           = "14.0.2"
