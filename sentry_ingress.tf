@@ -1,6 +1,6 @@
 data "kubernetes_service" "sentry_web" {
   metadata {
-    name = "${var.module_prefix}-web"
+    name = "${local.sentry_prefix}-web"
   }
 
   depends_on = [helm_release.sentry]
@@ -8,7 +8,7 @@ data "kubernetes_service" "sentry_web" {
 
 data "kubernetes_service" "sentry_relay" {
   metadata {
-    name = "${var.module_prefix}-relay"
+    name = "${local.sentry_prefix}-relay"
   }
   depends_on = [helm_release.sentry]
 }
