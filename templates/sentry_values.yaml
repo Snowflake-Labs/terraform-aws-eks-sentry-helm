@@ -1,5 +1,3 @@
-prefix: ${module_prefix}
-
 user:
   create: true
   email: ${sentry_root_user_email}
