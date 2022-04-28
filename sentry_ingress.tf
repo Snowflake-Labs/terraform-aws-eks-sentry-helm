@@ -108,10 +108,12 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
       http {
         path {
           path = "/api/0/*"
-          service {
-            name = data.kubernetes_service.sentry_web.metadata.0.name
-            port {
-              number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+          backend {
+            service {
+              name = data.kubernetes_service.sentry_web.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+              }
             }
           }
         }
