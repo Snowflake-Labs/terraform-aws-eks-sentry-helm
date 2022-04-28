@@ -13,11 +13,10 @@ data "kubernetes_service" "sentry_relay" {
   depends_on = [helm_release.sentry]
 }
 
-resource "kubernetes_ingress" "sentry_ingress" {
+resource "kubernetes_ingress_v1" "sentry_ingress" {
   metadata {
     name      = "${local.sentry_prefix}-ingress"
     namespace = "default"
-
     labels = {
       app         = "${local.sentry_prefix}-ingress"
       environment = var.env
@@ -68,7 +67,7 @@ resource "kubernetes_ingress" "sentry_ingress" {
   }
 }
 
-resource "kubernetes_ingress" "sentry_ingress_private" {
+resource "kubernetes_ingress_v1" "sentry_ingress_private" {
   metadata {
     name      = "${local.sentry_prefix}-ingress-private"
     namespace = "default"
