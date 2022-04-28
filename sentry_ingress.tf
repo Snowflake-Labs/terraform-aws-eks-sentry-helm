@@ -41,25 +41,35 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
       http {
         path {
           path = "/api/0/*"
-          backend {
-            service_name = data.kubernetes_service.sentry_web.metadata.0.name
-            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+          service {
+            name = data.kubernetes_service.sentry_web.metadata.0.name
+            port {
+              number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+            }
           }
         }
 
         path {
           path = "/api/*"
           backend {
-            service_name = data.kubernetes_service.sentry_relay.metadata.0.name
-            service_port = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+            service {
+              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+              }
+            }
           }
         }
 
         path {
           path = "/*"
           backend {
-            service_name = data.kubernetes_service.sentry_web.metadata.0.name
-            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+            service {
+              name = data.kubernetes_service.sentry_web.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+              }
+            }
           }
         }
       }
@@ -96,25 +106,35 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
       http {
         path {
           path = "/api/0/*"
-          backend {
-            service_name = data.kubernetes_service.sentry_web.metadata.0.name
-            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+          service {
+            name = data.kubernetes_service.sentry_web.metadata.0.name
+            port {
+              number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+            }
           }
         }
 
         path {
           path = "/api/*"
           backend {
-            service_name = data.kubernetes_service.sentry_relay.metadata.0.name
-            service_port = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+            service {
+              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+              }
+            }
           }
         }
 
         path {
           path = "/*"
           backend {
-            service_name = data.kubernetes_service.sentry_web.metadata.0.name
-            service_port = data.kubernetes_service.sentry_web.spec.0.port.0.port
+            service {
+              name = data.kubernetes_service.sentry_web.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
+              }
+            }
           }
         }
       }
