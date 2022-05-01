@@ -51,6 +51,6 @@ system:
   public: false
 
 slack:
-  clientId: ${sentry_slack_client_id}
-  clientSecret: ${sentry_slack_client_secret}
-  signingSecret: ${sentry_slack_signing_secret}
+  clientId: "${sentry_slack_client_id}"
+  clientSecret: "${sentry_slack_client_secret}"
+  signingSecret: "${sentry_slack_signing_secret}"
