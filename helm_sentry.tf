@@ -1,10 +1,11 @@
+
+# chart = "${path.module}/helm_sentry/"
+# When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
 resource "helm_release" "sentry" {
-  name  = "sentry"
-  chart = "${path.module}/helm_sentry/"
-  # When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
-  # Use remote helm uncomment line 40 and comment 43, 44 using repository and version and chart = "sentry"
-  #   repository = "https://sentry-kubernetes.github.io/charts"
-  #   version    = "13.0.0"
+  name              = "sentry"
+  chart             = "sentry"
+  repository        = "https://sentry-kubernetes.github.io/charts"
+  version           = "14.0.2"
   timeout           = 600
   wait              = false
   dependency_update = true
@@ -29,10 +30,11 @@ resource "helm_release" "sentry" {
         postgres_db_name  = "${var.db_name}",
         postgres_username = "${var.db_user}",
         postgres_password = "${var.db_pass}",
-        smtp_host         = "${var.smtp_host}",
-        smtp_username     = "${var.smtp_username}",
-        smtp_password     = "${var.smtp_password}",
-        dns_name          = "${local.sentry_dns_name}",
+
+        smtp_host     = "${var.smtp_host}",
+        smtp_username = "${var.smtp_username}",
+        smtp_password = "${var.smtp_password}",
+        dns_name      = "${local.sentry_dns_name}",
 
         sentry_slack_client_id      = "${var.sentry_slack_client_id}",
         sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",

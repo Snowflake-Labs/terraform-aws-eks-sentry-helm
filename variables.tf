@@ -24,11 +24,6 @@ variable "hosted_zone_subdomain" {
   type        = string
 }
 
-variable "private_hosted_zone_id" {
-  description = "ID of the route53 hosted zone."
-  type        = string
-}
-
 variable "subdomain_cert_arn" {
   description = "ACM Cert ARN of the wildcart cert for the hosted zone domain name."
   type        = string
@@ -113,6 +108,12 @@ variable "env" {
 
 variable "allowed_cidr_blocks" {
   description = "Allowed CIDR blocks that can initiate connections to Sentry."
+  type        = list(string)
+  default     = []
+}
+
+variable "allowed_security_group_ids" {
+  description = "Allowed SG IDs that can initiate connections to Sentry."
   type        = list(string)
   default     = []
 }

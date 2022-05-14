@@ -1,5 +1,3 @@
-prefix: ${module_prefix}
-
 user:
   create: true
   email: ${sentry_root_user_email}
@@ -53,6 +51,6 @@ system:
   public: false
 
 slack:
-  clientId: ${sentry_slack_client_id}
-  clientSecret: ${sentry_slack_client_secret}
-  signingSecret: ${sentry_slack_signing_secret}
+  clientId: "${sentry_slack_client_id}"
+  clientSecret: "${sentry_slack_client_secret}"
+  signingSecret: "${sentry_slack_signing_secret}"
