@@ -29,3 +29,7 @@ resource "aws_security_group_rule" "sentry_private_ingress_allow_to_sentry_conta
 
   security_group_id = aws_security_group.sentry_private_ingress_sg.0.id
 }
+
+locals {
+  sentry_private_ingress_sg_ids = length(var.allowed_security_group_ids) == 0 ? [] : [aws_security_group.sentry_private_ingress_sg.0.id]
+}
