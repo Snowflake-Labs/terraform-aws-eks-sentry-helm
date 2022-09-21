@@ -5,7 +5,7 @@ resource "helm_release" "sentry" {
   name              = "sentry"
   chart             = "sentry"
   repository        = "https://sentry-kubernetes.github.io/charts"
-  version           = "14.0.2"
+  version           = var.sentry_helm_chart_version
   timeout           = 600
   wait              = false
   dependency_update = true

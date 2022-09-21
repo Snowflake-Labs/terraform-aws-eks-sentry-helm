@@ -4,6 +4,11 @@ variable "kubernetes_version" {
   type        = string
 }
 
+variable "sentry_helm_chart_version" {
+  description = "Sentry Helm Chart version."
+  type        = string
+}
+
 variable "vpc_id" {
   description = "VPC ID where the EKS cluster will be created."
   type        = string
