@@ -178,3 +178,72 @@ locals {
 locals {
   sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
 }
+
+#---------------------------------------------------------------------------------------------------------------------
+# Configure Monitoring
+# ---------------------------------------------------------------------------------------------------------------------
+
+variable "grafana_namespace" {
+  description = "Name of Grafana namespace."
+  type        = string
+  default     = "grafana"
+}
+
+variable "prometheus_namespace" {
+  description = "Name of Prometheus namespace."
+  type        = string
+  default     = "prometheus"
+}
+
+variable "service_account_name" {
+  description = "Name of IAM Proxy Service Account."
+  type        = string
+  default     = "sentry-iamproxy-service-account"
+}
+
+variable "service_account_iam_role_name" {
+  description = "Name of IAM role for the service account"
+  type        = string
+  default     = "SENTRY-EKS-AMP-ServiceAccount-Role"
+}
+
+variable "service_account_iam_role_description" {
+  description = "Description of IAM role for the service account"
+  type        = string
+  default     = "Sentry IAM role to be used by a K8s service account with write access to AMP"
+}
+
+variable "service_account_iam_policy_name" {
+  description = "Name of the service account IAM policy"
+  type        = string
+  default     = "SENTRYAWSManagedPrometheusWriteAccessPolicy"
+}
+
+variable "create_prometheus_server" {
+  description = "Should this module create a Prometheus server statefulset in the EKS cluster for Amazon Managed Prometheus?"
+  type        = bool
+  default     = true
+}
+
+variable "sentry_amp_workspace_id" {
+  description = "SENTRY AMP workspace ID."
+  type        = string
+}
+
+variable "sentry_amp_endpoint" {
+  description = "SENTRY AMP ENDPOINT."
+  type        = string
+}
+
+variable "sentry_amp_workspace_arn" {
+  description = "SENTRY AMP workspace ARN."
+  type        = string
+}
+
+variable "account_id" {
+  description = "ID of Account."
+}
+
+variable "oidc_provider" {
+  description = "OIDC provider of EKS Cluster."
+}

@@ -1,0 +1,40 @@
+serviceAccounts:
+    server:
+        name: ${name}
+        annotations:
+            eks.amazonaws.com/role-arn: ${arn}
+    alertmanager:
+      create: false
+    pushgateway:
+      create: false           
+server:
+  remoteWrite:
+    - url: https://aps-workspaces.${region}.amazonaws.com/workspaces/${workspace}/api/v1/remote_write
+      sigv4:
+        region: ${region}
+      queue_config:
+        max_samples_per_send: 1000
+        max_shards: 200
+        capacity: 2500
+  statefulSet:
+      enabled: true
+      podManagementPolicy: Parallel
+  resources:
+    limits:
+      cpu: 800m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 2Gi
+  persistentVolume:
+    size: 50Gi           
+  securityContext:
+    runAsUser: 1000
+    runAsNonRoot: true
+    fsGroup: 2000       
+
+alertmanager:
+  enabled: false
+
+pushgateway:
+  enabled: false
