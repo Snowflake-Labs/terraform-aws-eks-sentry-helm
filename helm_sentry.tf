@@ -123,40 +123,33 @@ resource "kubernetes_namespace" "prometheus" {
   }
 }
 
-data "template_file" "prometheus_values" {
-  count    = var.create_prometheus_server == true ? 1 : 0
-  template = file("${path.module}/templates/prometheus-for-amp.values")
-
-  vars = {
-    region    = var.aws_region
-    name      = var.service_account_name
-    arn       = aws_iam_role.sentry_eks_amp_role.arn
-    workspace = var.sentry_amp_workspace_id
-  }
-}
-
-resource "local_file" "prometheus_values" {
-  count    = var.create_prometheus_server == true ? 1 : 0
-  content  = data.template_file.prometheus_values[0].rendered
-  filename = "${path.module}/templates/prometheus_values.yaml"
-}
-
 resource "helm_release" "prometheus_install" {
-  count             = var.create_prometheus_server == true ? 1 : 0
-  name              = "prometheus-for-amp"
-  repository        = "https://prometheus-community.github.io/helm-charts"
-  chart             = "prometheus"
-  namespace         = var.prometheus_namespace
+  count = var.create_prometheus_server == true ? 1 : 0
+
+  name      = "prometheus-for-amp"
+  namespace = var.prometheus_namespace
+
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "prometheus"
+
   timeout           = 600
   wait              = false
   dependency_update = true
+
   values = [
-    "${file("${path.module}/templates/prometheus_values.yaml")}"
+    templatefile(
+      "${path.module}/templates/prometheus_for_amp_values.yaml",
+      {
+        region    = var.aws_region
+        name      = var.service_account_name
+        arn       = aws_iam_role.sentry_eks_amp_role.arn
+        workspace = var.sentry_amp_workspace_id
+      }
+    )
   ]
 
   depends_on = [
     kubernetes_namespace.prometheus,
-    local_file.prometheus_values
   ]
 
   lifecycle {
