@@ -158,4 +158,8 @@ resource "helm_release" "prometheus_install" {
     kubernetes_namespace.prometheus,
     local_file.prometheus_values
   ]
+
+  lifecycle {
+    ignore_changes = all
+  }
 }
