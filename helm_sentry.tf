@@ -23,7 +23,7 @@ resource "helm_release" "sentry" {
         allowed_cidr_blocks_str = "${join(",", var.allowed_cidr_blocks)}",
         private_subnet_ids_str  = "${join(",", var.private_subnet_ids)}",
         public_subnet_ids_str   = "${join(",", var.public_subnet_ids)}",
-        tags                    = "environment=${var.env}"
+        tags                    = "environment=${var.env}",
 
         postgres_db_host  = "${var.db_host}",
         postgres_db_port  = "${var.db_port}",
@@ -39,7 +39,7 @@ resource "helm_release" "sentry" {
         sentry_slack_client_id      = "${var.sentry_slack_client_id}",
         sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",
         sentry_slack_signing_secret = "${var.sentry_slack_signing_secret}",
-        existing_secret_name        = "${var.sentry_secret_key}"
+        existing_secret_name        = "${var.sentry_secret_key}",
       }
     )
   ]
