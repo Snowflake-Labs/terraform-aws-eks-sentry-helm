@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws        = "~> 4.37.0"
     local      = "~> 2.2.3"
-    random     = "~> 2.1.0"
+    random     = "~> 3.4.3"
     kubernetes = "~> 2.15.0"
   }
 }
