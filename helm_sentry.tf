@@ -1,4 +1,8 @@
 
+# ------------------------------------------------------------------------------
+# Sentry Install
+# ------------------------------------------------------------------------------
+
 # chart = "${path.module}/helm_sentry/"
 # When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
 resource "helm_release" "sentry" {
@@ -46,76 +50,8 @@ resource "helm_release" "sentry" {
 }
 
 # ------------------------------------------------------------------------------
-# Monitoring Configuration
+# Prometheus Install
 # ------------------------------------------------------------------------------
-
-data "aws_iam_policy_document" "sentry_remote_write_assume" {
-  statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-    effect  = "Allow"
-
-    principals {
-      type        = "Federated"
-      identifiers = ["arn:aws:iam::${var.account_id}:oidc-provider/${var.oidc_provider}"]
-    }
-    condition {
-      test     = "StringEquals"
-      variable = "${var.oidc_provider}:sub"
-      values = [
-        "system:serviceaccount:${var.grafana_namespace}:${var.service_account_name}"
-      ]
-    }
-  }
-  statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-    effect  = "Allow"
-
-    principals {
-      type        = "Federated"
-      identifiers = ["arn:aws:iam::${var.account_id}:oidc-provider/${var.oidc_provider}"]
-    }
-    condition {
-      test     = "StringEquals"
-      variable = "${var.oidc_provider}:sub"
-      values = [
-        "system:serviceaccount:${var.prometheus_namespace}:${var.service_account_name}"
-      ]
-    }
-  }
-}
-
-resource "aws_iam_role" "sentry_eks_amp_role" {
-  name               = var.service_account_iam_role_name
-  description        = var.service_account_iam_role_description
-  assume_role_policy = data.aws_iam_policy_document.sentry_remote_write_assume.json
-}
-
-resource "aws_iam_policy" "sentry_amp_write" {
-  name        = var.service_account_iam_policy_name
-  description = "Permissions to write to all AMP workspaces"
-
-  policy = jsonencode({
-    "Version" : "2012-10-17",
-    "Statement" : [
-      {
-        "Effect" : "Allow",
-        "Action" : [
-          "aps:RemoteWrite",
-          "aps:QueryMetrics",
-          "aps:GetSeries",
-          "aps:GetLabels",
-          "aps:GetMetricMetadata"
-        ],
-        "Resource" : "*"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "sentry_amp_write" {
-  role       = aws_iam_role.sentry_eks_amp_role.name
-  policy_arn = aws_iam_policy.sentry_amp_write.arn
-}
 
 resource "kubernetes_namespace" "prometheus" {
   count = var.create_prometheus_server == true ? 1 : 0
@@ -125,18 +61,14 @@ resource "kubernetes_namespace" "prometheus" {
 }
 
 resource "helm_release" "prometheus_install" {
-  count = var.create_prometheus_server == true ? 1 : 0
-
-  name      = "prometheus-for-amp"
-  namespace = var.prometheus_namespace
-
-  repository = "https://prometheus-community.github.io/helm-charts"
-  chart      = "prometheus"
-
+  count             = var.create_prometheus_server == true ? 1 : 0
+  name              = "prometheus-for-amp"
+  repository        = "https://prometheus-community.github.io/helm-charts"
+  chart             = "prometheus"
+  namespace         = var.prometheus_namespace
   timeout           = 600
   wait              = false
   dependency_update = true
-
   values = [
     templatefile(
       "${path.module}/templates/prometheus_for_amp_values.yaml",
@@ -150,10 +82,6 @@ resource "helm_release" "prometheus_install" {
   ]
 
   depends_on = [
-    kubernetes_namespace.prometheus,
+    kubernetes_namespace.prometheus
   ]
-
-  lifecycle {
-    ignore_changes = all
-  }
 }
