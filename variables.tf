@@ -90,6 +90,11 @@ variable "sentry_secret_key" {
   type = string
 }
 
+variable "sentry_amp_workspace_id" {
+  description = "SENTRY AMP workspace ID."
+  type        = string
+}
+
 # Optional Variables
 variable "app_name" {
   description = "Name of the app."
@@ -183,10 +188,6 @@ locals {
   sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
 }
 
-#---------------------------------------------------------------------------------------------------------------------
-# Configure Monitoring
-# ---------------------------------------------------------------------------------------------------------------------
-
 variable "grafana_namespace" {
   description = "Name of Grafana namespace."
   type        = string
@@ -227,11 +228,6 @@ variable "create_prometheus_server" {
   description = "Should this module create a Prometheus server statefulset in the EKS cluster for Amazon Managed Prometheus?"
   type        = bool
   default     = true
-}
-
-variable "sentry_amp_workspace_id" {
-  description = "SENTRY AMP workspace ID."
-  type        = string
 }
 
 variable "sentry_amp_endpoint" {
