@@ -39,7 +39,7 @@ resource "helm_release" "sentry" {
         sentry_slack_client_id      = "${var.sentry_slack_client_id}",
         sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",
         sentry_slack_signing_secret = "${var.sentry_slack_signing_secret}",
-        existing_secret_name        = "${var.sentry_secret_key}",
+        existing_secret_name        = "${kubernetes_secret_v1.sentry_secrets.metadata.name}",
       }
     )
   ]
