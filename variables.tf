@@ -86,6 +86,10 @@ variable "sentry_slack_signing_secret" {
   type = string
 }
 
+variable "sentry_secret_key" {
+  type = string
+}
+
 # Optional Variables
 variable "app_name" {
   description = "Name of the app."
