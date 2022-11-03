@@ -10,8 +10,8 @@ rabbitmq:
   enabled: false
 
 sentry:
-  existingSecret: ${existing_secret_name}
-  existingSecretKey: "sentry_secret_key"
+  existingSecret: sentry-secrets
+  existingSecretKey: sentry_secret_key
   web:
     service:
       annotations:

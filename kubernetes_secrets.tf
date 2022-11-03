@@ -4,6 +4,6 @@ resource "kubernetes_secret_v1" "sentry_secrets" {
   }
 
   data = {
-    sentry_secret_key = var.sentry_secret_key
+    sentry_secret_key = "${var.sentry_secret_key}"
   }
 }
