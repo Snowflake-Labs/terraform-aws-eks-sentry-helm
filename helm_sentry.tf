@@ -75,7 +75,7 @@ resource "helm_release" "prometheus_install" {
       {
         region    = var.aws_region
         name      = var.service_account_name
-        arn       = aws_iam_role.sentry_eks_amp_role.arn
+        arn       = aws_iam_role.sentry_eks_amp_role[0].arn
         workspace = var.sentry_amp_workspace_id
       }
     )
@@ -84,4 +84,12 @@ resource "helm_release" "prometheus_install" {
   depends_on = [
     kubernetes_namespace.prometheus
   ]
+
+  lifecycle {
+    precondition {
+      condition     = var.sentry_amp_workspace_id != ""
+      error_message = "The var.sentry_amp_workspace_id cannot be empty when var.create_prometheus_server is set to true."
+    }
+  }
+
 }
