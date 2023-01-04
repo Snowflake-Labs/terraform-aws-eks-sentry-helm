@@ -1,7 +1,7 @@
 user:
   create: true
-  email: ${sentry_root_user_email}
-  password: ${sentry_root_user_password}
+  email: "${sentry_root_user_email}"
+  password: "${sentry_root_user_password}"
 
 nginx:
   enabled: false
@@ -10,7 +10,7 @@ rabbitmq:
   enabled: false
 
 sentry:
-  existingSecret: ${existing_secret_name}
+  existingSecret: "${existing_secret_name}"
   existingSecretKey: sentry_secret_key
   web:
     service:
@@ -32,20 +32,20 @@ postgresql:
   enabled: false
 
 externalPostgresql:
-  host: ${postgres_db_host}
-  port: ${postgres_db_port}
-  database: ${postgres_db_name}
-  username: ${postgres_username}
-  password: ${postgres_password}
+  host: "${postgres_db_host}"
+  port: "${postgres_db_port}"
+  database: "${postgres_db_name}"
+  username: "${postgres_username}"
+  password: "${postgres_password}"
 
 mail:
   backend: smtp
   useTls: true
   from: sentry@snowflake.com
-  host: ${smtp_host}
+  host: "${smtp_host}"
   port: 587
-  username: ${smtp_username}
-  password: ${smtp_password}
+  username: "${smtp_username}"
+  password: "${smtp_password}"
 
 system:
   url: "https://${dns_name}"
