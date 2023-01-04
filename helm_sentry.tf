@@ -87,8 +87,8 @@ resource "helm_release" "prometheus_install" {
 
   lifecycle {
     precondition {
-      condition     = var.sentry_amp_workspace_id != ""
-      error_message = "The var.sentry_amp_workspace_id cannot be empty when var.create_prometheus_server is set to true."
+      condition     = var.sentry_amp_workspace_id != null
+      error_message = "The var.sentry_amp_workspace_id cannot be NULL when var.create_prometheus_server is set to TRUE."
     }
   }
 
