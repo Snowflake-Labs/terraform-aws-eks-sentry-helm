@@ -1,6 +1,8 @@
 # terraform-aws-eks-sentry-helm
 Terraform module to create the sentry infrastructure using the helm chart.
 
+## RDS
+The helm chart doesn't create any database server and expects it be to be setup and reachable with a database named `sentry` created and accessiable via the db credentials setup in AWS secrets manager and the secret ARN passed into this module.
 
 ## Okta Integration
 
