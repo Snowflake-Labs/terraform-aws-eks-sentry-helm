@@ -72,6 +72,7 @@ variable "module_prefix" {
 variable "bastion_security_group_id" {
   description = "Security Group of the bastion host in the public subnet."
   type        = string
+  default     = null
 }
 
 variable "sentry_slack_client_id" {
@@ -93,6 +94,7 @@ variable "sentry_secret_key" {
 variable "sentry_amp_workspace_id" {
   description = "SENTRY AMP workspace ID."
   type        = string
+  default     = null
 }
 
 # Optional Variables
@@ -233,11 +235,13 @@ variable "create_prometheus_server" {
 variable "sentry_amp_endpoint" {
   description = "SENTRY AMP ENDPOINT."
   type        = string
+  default     = null
 }
 
 variable "sentry_amp_workspace_arn" {
   description = "SENTRY AMP workspace ARN."
   type        = string
+  default     = null
 }
 
 variable "account_id" {

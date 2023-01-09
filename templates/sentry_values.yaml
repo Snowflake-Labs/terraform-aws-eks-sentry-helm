@@ -36,7 +36,7 @@ externalPostgresql:
   port: ${postgres_db_port}
   database: ${postgres_db_name}
   username: ${postgres_username}
-  password: ${postgres_password}
+  password: "${postgres_password}"
 
 mail:
   backend: smtp
