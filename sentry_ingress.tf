@@ -99,7 +99,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
       "alb.ingress.kubernetes.io/subnets"         = "${join(",", var.private_subnet_ids)}"
       "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
       "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
-      "external-dns.alpha.kubernetes.io/hostname" = local.sentry_dns_name
+      "external-dns.alpha.kubernetes.io/hostname" = "internal-${local.sentry_dns_name}"
     }
   }
 
