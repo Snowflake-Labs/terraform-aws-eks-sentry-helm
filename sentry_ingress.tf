@@ -55,7 +55,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
         }
 
         path {
-          path = "^/api/[1-9]\\d*/"
+          path = "/api/[1-9]?[0-9]*/"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
