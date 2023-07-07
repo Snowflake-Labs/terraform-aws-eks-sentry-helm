@@ -13,6 +13,9 @@ data "kubernetes_service" "sentry_relay" {
   depends_on = [helm_release.sentry]
 }
 
+# The load balancers regex must match: 
+# https://github.com/getsentry/self-hosted/blob/master/nginx/nginx.conf#L66C2-L78
+
 resource "kubernetes_ingress_v1" "sentry_ingress" {
   metadata {
     name      = "sentry-ingress"
@@ -40,19 +43,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
     rule {
       http {
         path {
-          path = "/api/0/*"
-          backend {
-            service {
-              name = data.kubernetes_service.sentry_web.metadata.0.name
-              port {
-                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
-              }
-            }
-          }
-        }
-
-        path {
-          path = "/api/*"
+          path = "/api/store/"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
@@ -64,7 +55,19 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
         }
 
         path {
-          path = "/*"
+          path = "^/api/[1-9]\\d*/"
+          backend {
+            service {
+              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+              }
+            }
+          }
+        }
+
+        path {
+          path = "/"
           backend {
             service {
               name = data.kubernetes_service.sentry_web.metadata.0.name
@@ -107,19 +110,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
     rule {
       http {
         path {
-          path = "/api/0/*"
-          backend {
-            service {
-              name = data.kubernetes_service.sentry_web.metadata.0.name
-              port {
-                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
-              }
-            }
-          }
-        }
-
-        path {
-          path = "/api/*"
+          path = "/api/store/"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
@@ -131,7 +122,19 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
         }
 
         path {
-          path = "/*"
+          path = "^/api/[1-9]\\d*/"
+          backend {
+            service {
+              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              port {
+                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+              }
+            }
+          }
+        }
+
+        path {
+          path = "/"
           backend {
             service {
               name = data.kubernetes_service.sentry_web.metadata.0.name
