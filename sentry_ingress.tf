@@ -67,7 +67,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
         }
 
         path {
-          path = "/"
+          path = "/*"
           backend {
             service {
               name = data.kubernetes_service.sentry_web.metadata.0.name
@@ -122,7 +122,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
         }
 
         path {
-          path = "^/api/[1-9]\\d*/"
+          path = "/api/[1-9]?[0-9]*/"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
@@ -134,7 +134,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
         }
 
         path {
-          path = "/"
+          path = "/*"
           backend {
             service {
               name = data.kubernetes_service.sentry_web.metadata.0.name
