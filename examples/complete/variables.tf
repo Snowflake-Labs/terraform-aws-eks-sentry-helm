@@ -177,7 +177,7 @@ variable "sentry_slack_signing_secret" {
 variable "create_prometheus_server" {
   description = "Create a Prometheus server statefulset in the EKS cluster for Amazon Managed Prometheus."
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "grafana_namespace" {
@@ -202,37 +202,4 @@ variable "sentry_amp_workspace_id" {
   description = "SENTRY AMP workspace ID."
   type        = string
   default     = null
-}
-
-variable "service_account_name" {
-  description = "Name of IAM Proxy Service Account."
-  type        = string
-  default     = "sentry-iamproxy-service-account"
-}
-
-variable "service_account_iam_role_name" {
-  description = "Name of IAM role for the service account"
-  type        = string
-  default     = "SENTRY-EKS-AMP-ServiceAccount-Role"
-}
-
-variable "service_account_iam_role_description" {
-  description = "Description of IAM role for the service account"
-  type        = string
-  default     = "Sentry IAM role to be used by a K8s service account with write access to AMP"
-}
-
-variable "service_account_iam_policy_name" {
-  description = "Name of the service account IAM policy"
-  type        = string
-  default     = "SENTRYAWSManagedPrometheusWriteAccessPolicy"
-}
-
-
-locals {
-  sentry_prefix = "${var.module_prefix}-${var.app_name}"
-}
-
-locals {
-  sentry_dns_name = var.domain_name_suffix != null ? "${var.app_name}-${var.domain_name_suffix}.${var.hosted_zone_subdomain}" : "${var.app_name}.${var.hosted_zone_subdomain}"
 }

@@ -1,0 +1,23 @@
+account_id                = "AWS ACCOUNT ID"
+env                       = "dev"
+module_prefix             = "blue"
+sentry_helm_chart_version = "17.0.0"
+sentry_secret_key         = "XXXXX"
+
+vpc_id                     = "vpc-XXXXX"
+private_subnet_ids         = ["subnet-XXXXX", "subnet-XXXXX"]
+public_subnet_ids          = ["subnet-XXXXX", "subnet-XXXXX"]
+allowed_cidr_blocks        = ["IP CIDR BLOCK"]
+allowed_security_group_ids = ["sg-XXXXX"]
+
+db_host = "RDS CLUSTER HOSTNAME"
+db_port = "5432"
+db_name = "sentry"
+db_user = "RDS USERNAME"
+db_pass = "RDS PASSWORD"
+
+sentry_root_user_email    = "EMAIL ADDRESS"
+sentry_root_user_password = "PASSWORD STRING"
+
+hosted_zone_subdomain     = "example.com"
+subdomain_cert_arn        = "arn:aws:acm:<AWS REGION>:<AWS ACCOUNT>:certificate/<CERT ID>"
