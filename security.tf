@@ -43,7 +43,7 @@ resource "aws_security_group_rule" "sentry_private_ingress_allow_from_private_su
   from_port = 443
   protocol  = "tcp"
   cidr_blocks = [
-    for index in length(var.private_subnet_ids) :
+    for index in range(length(var.private_subnet_ids)) :
     data.aws_subnet.vpc_private_subnet_cidrs[index].cidr_block
   ]
 
