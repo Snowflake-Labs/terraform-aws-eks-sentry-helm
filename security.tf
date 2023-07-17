@@ -31,7 +31,7 @@ resource "aws_security_group_rule" "sentry_private_ingress_allow_to_sentry_conta
 }
 
 data "aws_subnet" "vpc_private_subnet_cidrs" {
-  for_each = var.private_subnet_ids
+  for_each = toset(var.private_subnet_ids)
   id       = each.value
 }
 
