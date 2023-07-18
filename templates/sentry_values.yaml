@@ -38,21 +38,26 @@ externalPostgresql:
   username: ${postgres_username}
   password: "${postgres_password}"
 
+%{ if smtp_enable == true ~}
 mail:
   backend: smtp
   useTls: true
-  from: sentry@snowflake.com
+  from: ${sentry_root_user_email}
   host: ${smtp_host}
   port: 587
   username: ${smtp_username}
   password: ${smtp_password}
+%{ endif ~}
 
 system:
   url: "https://${dns_name}"
   adminEmail: "${sentry_root_user_email}"
   public: false
 
+%{ if slack_enable == true ~}
 slack:
   clientId: "${sentry_slack_client_id}"
   clientSecret: "${sentry_slack_client_secret}"
   signingSecret: "${sentry_slack_signing_secret}"
+%{ endif ~}
+
