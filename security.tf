@@ -30,7 +30,7 @@ resource "aws_security_group_rule" "sentry_private_ingress_allow_to_sentry_conta
   security_group_id = aws_security_group.sentry_private_ingress_sg.0.id
 }
 
-data "aws_subnets" "vpc_private_subnet_cidrs" {
+data "aws_subnet" "vpc_private_subnet_cidrs" {
   count = length(var.private_subnet_ids)
   id    = var.private_subnet_ids[count.index]
 }
