@@ -3,16 +3,14 @@
 # Sentry Install
 # ------------------------------------------------------------------------------
 
-# chart = "${path.module}/helm_sentry/"
-# When PR is merged: https://github.com/sentry-kubernetes/charts/pull/558,
 resource "helm_release" "sentry" {
   name              = "sentry"
   chart             = "sentry"
   repository        = "https://sentry-kubernetes.github.io/charts"
   version           = var.sentry_helm_chart_version
-  timeout           = 900
-  wait              = true
-  dependency_update = true
+  timeout           = 600
+  wait              = false
+  dependency_update = false
 
   values = [
     templatefile(
