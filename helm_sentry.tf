@@ -11,7 +11,6 @@ resource "helm_release" "sentry" {
   timeout           = 600
   wait              = var.wait
   dependency_update = var.dependency_update
-  debug             = var.debug
 
   values = [
     templatefile(

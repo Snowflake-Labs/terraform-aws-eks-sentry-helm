@@ -152,12 +152,6 @@ variable "slack_enable" {
   default     = false
 }
 
-variable "debug" {
-  description = "Debug flag."
-  type        = bool
-  default     = false
-}
-
 variable "dependency_update" {
   description = "Dependency update flag flag."
   type        = bool
