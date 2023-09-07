@@ -70,8 +70,6 @@ variable "sentry_secret_key" {
   type = string
 }
 
-
-
 # OPTIONAL VARIABLES
 variable "env" {
   description = "Environment to be test/dev/prod."
@@ -150,6 +148,24 @@ variable "smtp_password" {
 ## Slack Integration - The `slack_enable` variable needs to be set to `true`.
 variable "slack_enable" {
   description = "Enable Sentry integration with Slack."
+  type        = bool
+  default     = false
+}
+
+variable "debug" {
+  description = "Debug flag."
+  type        = bool
+  default     = false
+}
+
+variable "dependency_update" {
+  description = "Dependency update flag flag."
+  type        = bool
+  default     = false
+}
+
+variable "wait" {
+  description = "wait flag."
   type        = bool
   default     = false
 }

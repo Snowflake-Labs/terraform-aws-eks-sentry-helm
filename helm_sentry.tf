@@ -9,8 +9,9 @@ resource "helm_release" "sentry" {
   repository        = "https://sentry-kubernetes.github.io/charts"
   version           = var.sentry_helm_chart_version
   timeout           = 600
-  wait              = false
-  dependency_update = false
+  wait              = var.wait
+  dependency_update = var.dependency_update
+  debug             = var.debug
 
   values = [
     templatefile(
