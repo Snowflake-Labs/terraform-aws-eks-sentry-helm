@@ -182,7 +182,7 @@ variable "sentry_slack_signing_secret" {
   default     = null
 }
 
-variable "enable_access_logs" {
+variable "enable_lb_access_logs" {
   description = "Create an S3 bucket and send ALB access logs to that bucket."
   type        = bool
   default     = false
