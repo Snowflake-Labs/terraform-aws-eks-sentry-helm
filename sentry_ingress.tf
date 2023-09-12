@@ -36,6 +36,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
       "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
       "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
       "external-dns.alpha.kubernetes.io/hostname" = local.sentry_dns_name
+      "alb.ingress.kubernetes.io/load-balancer-attributes" = var.enable_access_logs ? "access_logs.s3.enabled=true,access_logs.s3.bucket=${aws_s3_bucket.logs_bucket[0].id},access_logs.s3.prefix=${var.module_prefix}" : null
     }
   }
 
@@ -103,6 +104,7 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
       "alb.ingress.kubernetes.io/ssl-redirect"    = "443"
       "alb.ingress.kubernetes.io/certificate-arn" = var.subdomain_cert_arn
       "external-dns.alpha.kubernetes.io/hostname" = local.sentry_dns_name
+      "alb.ingress.kubernetes.io/load-balancer-attributes" = var.enable_access_logs ? "access_logs.s3.enabled=true,access_logs.s3.bucket=${aws_s3_bucket.logs_bucket[0].id},access_logs.s3.prefix=${var.module_prefix}" : null
     }
   }
 
