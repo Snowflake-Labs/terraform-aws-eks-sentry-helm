@@ -182,10 +182,10 @@ variable "sentry_slack_signing_secret" {
   default     = null
 }
 
-variable "enable_lb_access_logs" {
-  description = "Create an S3 bucket and send ALB access logs to that bucket."
-  type        = bool
-  default     = false
+variable "logs_bucket_name" {
+  description = "S3 Bucket's name (or id) to store load balancer logs."
+  type        = string
+  default     = null
 }
 
 # Prometheus Integration - The `create_prometheus_server` variable needs to be set to `true`.
