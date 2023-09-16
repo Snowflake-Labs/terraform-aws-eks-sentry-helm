@@ -14,7 +14,7 @@ data "kubernetes_service" "sentry_relay" {
 }
 
 locals {
-  logs_annotation = var.logs_bucket_name != null ? "access_logs.s3.enabled=true,access_logs.s3.bucket=${logs_bucket_name},access_logs.s3.prefix=${var.module_prefix}" : ""
+  logs_annotation = var.logs_bucket_name != null ? "access_logs.s3.enabled=true,access_logs.s3.bucket=${var.logs_bucket_name},access_logs.s3.prefix=${var.module_prefix}" : ""
 }
 
 
