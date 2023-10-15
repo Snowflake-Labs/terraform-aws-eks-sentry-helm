@@ -49,19 +49,19 @@ resource "kubernetes_ingress_v1" "sentry_ingress" {
     rule {
       http {
         path {
-          path = "/api/store/"
+          path = "/api/0/*"
           backend {
             service {
-              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              name = data.kubernetes_service.sentry_web.metadata.0.name
               port {
-                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
               }
             }
           }
         }
 
         path {
-          path = "/api/1-9?0-9*/"
+          path = "/api/*"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
@@ -117,19 +117,19 @@ resource "kubernetes_ingress_v1" "sentry_ingress_private" {
     rule {
       http {
         path {
-          path = "/api/store/"
+          path = "/api/0/*"
           backend {
             service {
-              name = data.kubernetes_service.sentry_relay.metadata.0.name
+              name = data.kubernetes_service.sentry_web.metadata.0.name
               port {
-                number = data.kubernetes_service.sentry_relay.spec.0.port.0.port
+                number = data.kubernetes_service.sentry_web.spec.0.port.0.port
               }
             }
           }
         }
 
         path {
-          path = "/api/1-9?0-9*/"
+          path = "/api/*"
           backend {
             service {
               name = data.kubernetes_service.sentry_relay.metadata.0.name
