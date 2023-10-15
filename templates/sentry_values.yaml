@@ -19,7 +19,7 @@ sentry:
         alb.ingress.kubernetes.io/healthcheck-port: traffic-port
 
 relay:
-  mode: proxy
+  mode: managed
   service:
     annotations:
       alb.ingress.kubernetes.io/healthcheck-path: /api/relay/healthcheck/ready/
