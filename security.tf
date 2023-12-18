@@ -36,7 +36,7 @@ data "aws_subnet" "vpc_private_subnet_cidrs" {
 }
 
 resource "aws_security_group_rule" "sentry_private_ingress_allow_from_private_subnet_cidr_blocks" {
-  count = length(var.private_subnet_ids) == 0 ? 0 : 1
+  count = length(var.private_subnet_ids) == 0 || length(aws_security_group.sentry_private_ingress_sg) == 0 ? 0 : 1
 
   type        = "ingress"
   to_port     = 443
