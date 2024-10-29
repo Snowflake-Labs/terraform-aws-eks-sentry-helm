@@ -28,6 +28,13 @@ relay:
 ingress:
   enabled: false
 
+zookeeper:
+  autopurge:
+    purgeInterval: 6
+    snapRetainCount: 3
+  persistence:
+    size: 30Gi
+
 postgresql:
   enabled: false
 
