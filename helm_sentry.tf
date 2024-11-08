@@ -44,6 +44,16 @@ resource "helm_release" "sentry" {
         sentry_slack_client_secret  = "${var.sentry_slack_client_secret}",
         sentry_slack_signing_secret = "${var.sentry_slack_signing_secret}",
         existing_secret_name        = "${kubernetes_secret_v1.sentry_secrets.metadata[0].name}",
+
+        image_sentry          = "${try(var.overwrite_image_variables["sentry"], null)}",
+        image_snuba           = "${try(var.overwrite_image_variables["snuba"], null)}",
+        image_relay           = "${try(var.overwrite_image_variables["relay"], null)}",
+        image_zookeeper       = "${try(var.overwrite_image_variables["zookeeper"], null)}",
+        image_dbCheck         = "${try(var.overwrite_image_variables["dbCheck"], null)}",
+        image_redis           = "${try(var.overwrite_image_variables["redis"], null)}",
+        image_kafka           = "${try(var.overwrite_image_variables["kafka"], null)}",
+        image_kafka_zookeeper = "${try(var.overwrite_image_variables["kafka_zookeeper"], null)}",
+        image_clickhouse      = "${try(var.overwrite_image_variables["clickhouse"], null)}",
       }
     )
   ]
