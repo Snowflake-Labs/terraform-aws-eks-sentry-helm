@@ -1,3 +1,4 @@
+---
 user:
   create: true
   email: ${sentry_root_user_email}
@@ -34,6 +35,11 @@ zookeeper:
     snapRetainCount: 3
   persistence:
     size: 30Gi
+%{ if image_zookeeper != null ~}
+  image:
+    registry: ${image_zookeeper["registry"]}
+    repository: ${image_zookeeper["repository"]}
+%{ endif ~}
 
 postgresql:
   enabled: false
@@ -70,3 +76,53 @@ slack:
 
 hooks:
   activeDeadlineSeconds: 600
+%{ if image_dbCheck != null ~}
+  dbCheck:
+    image:
+      repository: ${image_dbCheck["registry"]}/${image_dbCheck["repository"]}
+%{ endif ~}
+
+%{ if anytrue([image_sentry != null, image_snuba != null, image_relay != null]) ~}
+images:
+%{ if image_sentry != null ~}
+  sentry:
+    repository: ${image_sentry["registry"]}/${image_sentry["repository"]}
+%{ endif ~}
+
+%{ if image_snuba != null ~}
+  snuba:
+    repository: ${image_snuba["registry"]}/${image_snuba["repository"]}
+%{ endif ~}
+
+%{ if image_relay != null ~}
+  relay:
+    repository: ${image_relay["registry"]}/${image_relay["repository"]}
+%{ endif ~}
+%{ endif ~}
+
+%{ if image_redis != null ~}
+redis:
+  image:
+    registry: ${image_redis["registry"]}
+    repository: ${image_redis["repository"]}
+%{ endif ~}
+
+%{ if image_kafka != null ~}
+kafka:
+  image:
+    registry: ${image_kafka["registry"]}
+    repository: ${image_kafka["repository"]}
+%{ endif ~}
+
+%{ if image_kafka_zookeeper != null ~}
+  zookeeper:
+    image:
+      registry: ${image_kafka_zookeeper["registry"]}
+      repository: ${image_kafka_zookeeper["repository"]}
+%{ endif ~}
+
+%{ if image_clickhouse != null ~}
+clickhouse:
+  clickhouse:
+    image: ${image_clickhouse["registry"]}/${image_clickhouse["repository"]}
+%{ endif ~}

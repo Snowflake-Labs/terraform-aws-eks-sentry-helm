@@ -243,6 +243,15 @@ variable "service_account_iam_policy_name" {
   default     = "SENTRYAWSManagedPrometheusWriteAccessPolicy"
 }
 
+variable "overwrite_image_variables" {
+  description = "A map of objects containing key-value pairs to overwrite the default image variables - registry and repository."
+  type = map(object({
+    registry   = string
+    repository = string
+  }))
+  default     = {}
+}
+
 
 locals {
   sentry_prefix = "${var.module_prefix}-${var.app_name}"
