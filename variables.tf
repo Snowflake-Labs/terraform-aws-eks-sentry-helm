@@ -15,6 +15,12 @@ variable "sentry_helm_chart_version" {
   default     = "17.0.0"
 }
 
+variable "sentry_kubernetes_namespace" {
+  description = "Kubernetes namespace to install Sentry."
+  type        = string
+  default     = "default"
+}
+
 variable "vpc_id" {
   description = "VPC ID where security groups will be created."
   type        = string

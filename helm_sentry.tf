@@ -3,8 +3,16 @@
 # Sentry Install
 # ------------------------------------------------------------------------------
 
+resource "kubernetes_namespace" "sentry" {
+  count = var.sentry_kubernetes_namespace == "default" ? 0 : 1
+  metadata {
+    name = var.sentry_kubernetes_namespace
+  }
+}
+
 resource "helm_release" "sentry" {
   name              = "sentry"
+  namespace         = var.sentry_kubernetes_namespace
   chart             = "sentry"
   repository        = "https://sentry-kubernetes.github.io/charts"
   version           = var.sentry_helm_chart_version
@@ -56,6 +64,10 @@ resource "helm_release" "sentry" {
         image_clickhouse      = "${try(var.overwrite_image_variables["clickhouse"], null)}",
       }
     )
+  ]
+
+  depends_on = [
+    kubernetes_namespace.sentry
   ]
 }
 
