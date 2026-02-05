@@ -249,6 +249,12 @@ variable "service_account_iam_policy_name" {
   default     = "SENTRYAWSManagedPrometheusWriteAccessPolicy"
 }
 
+variable "zookeeper_clickhouse_disk_size" {
+  description = "Overwrite the default data disk size of the Zookeeper Clickhouse in the Helm Chart with a custom value - example: 30Gi"
+  type        = string
+  default     = null
+}
+
 variable "overwrite_image_variables" {
   description = "A map of objects containing key-value pairs to overwrite the default image variables - registry and repository."
   type = map(object({
