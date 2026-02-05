@@ -33,8 +33,10 @@ zookeeper:
   autopurge:
     purgeInterval: 6
     snapRetainCount: 3
+%{ if zookeeper_clickhouse_disk_size != null ~}
   persistence:
-    size: 30Gi
+    size: ${zookeeper_clickhouse_disk_size}
+%{ endif ~}
 %{ if image_zookeeper != null ~}
   image:
     registry: ${image_zookeeper["registry"]}

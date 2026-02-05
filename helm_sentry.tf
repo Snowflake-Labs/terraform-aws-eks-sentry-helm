@@ -62,6 +62,8 @@ resource "helm_release" "sentry" {
         image_kafka           = "${try(var.overwrite_image_variables["kafka"], null)}",
         image_kafka_zookeeper = "${try(var.overwrite_image_variables["kafka_zookeeper"], null)}",
         image_clickhouse      = "${try(var.overwrite_image_variables["clickhouse"], null)}",
+
+        zookeeper_clickhouse_disk_size = var.zookeeper_clickhouse_disk_size
       }
     )
   ]
